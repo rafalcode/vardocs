@@ -1,0 +1,462 @@
+From the Sun SGE website: Monitoring and Controlling Jobs
+
+   After you submit jobs, you need to monitor and control them. The
+   following page provides information about monitoring and controlling
+   jobs.
+     * Monitoring and Controlling Jobs With QMON
+
+     * How to Monitor and Control Jobs
+     * How to Modify Job Attributes
+     * How to Change Job Priority
+     * How to Put Jobs and Array Job Tasks on Hold
+     * How to Force Jobs
+     * How to Verify Job Consistency
+     * How to Use the Why? Button to Get Information About Pending
+       Jobs
+     * How to Clear Error States
+     * How to Filter the Job List
+     * How to Customize the Job Control Display
+     * How to Get Additional Information About Jobs With the QMON
+       Object Browser
+
+     Monitoring and Controlling Jobs From the Command Line
+     * How to Monitor Jobs With qstat
+     * How to Control Jobs With qdel and qmod
+
+     Monitoring and Controlling Jobs by Email
+     * How to Monitor Jobs by Email
+
+Monitoring and Controlling Jobs With QMON
+
+   Note
+   Only the job owner or Grid Engine managers and operators can suspend
+   and resume jobs, delete jobs, hold back jobs, modify job priority, and
+   modify attributes. See Managers, Operators, and Owners.
+
+How to Monitor and Control Jobs
+
+    1. Click the Job Control button in the QMON Main Control window.
+       The Job Control dialog box appears, as shown below.
+       Dialog box titled Job Control. Shows the Running Jobs tab with
+       information about running jobs. Shows buttons for manipulating
+       running jobs.
+    2. You can perform the following tasks from the Job Control dialog
+       box:
+
+   Note
+   To select jobs, use the following mouse and key combinations:
+         1.
+               o To select multiple noncontiguous jobs, hold down the
+                 Control key and click two or more jobs.
+               o To select a contiguous range of jobs, hold down the Shift
+                 key, click the first job in the range, and then click the
+                 last job in the range.
+               o To toggle between selecting a job and clearing the
+                 selection, click the job while holding down the Control
+                 key.
+
+          + To monitor jobs, click the Pending Jobs, Running Jobs, or
+            Finished Jobs tab.
+          + To refresh the Job Control display, click the Refresh button
+            to force an update. QMON then uses a polling scheme to
+            retrieve the status of the jobs from sge_qmaster.
+          + To modify job attributes, select a pending or running job and
+            then click the Qalter button. For more information, see
+            How to Modify Job Attributes.
+          + To change job priority, select a pending or running job and
+            then press the Priority button. For more information, see
+            How to Change Job Priority.
+          + To put a job or an array task on hold, select a pending job
+            and then press the Hold button. For more information, see
+            How to Put Jobs and Array Job Tasks on Hold.
+          + To force a job, first select a pending job or running job,
+            next select the Force option and then click the Suspend,
+            Resume, or Delete buttons. For more information, see How
+            to Force Jobs.
+          + To verify job consistency, select a pending job and then click
+            the Qalter button. For more information, see How to Verify
+            Job Consistency.
+          + To get information about pending jobs using the Why? button,
+            select a pending job and then click the Why? button. For more
+            information, see How to Use the Why? Button to Get
+            Information About Pending Jobs.
+          + To clear error states, select a pending job and then click the
+            Clear Error button. For more information, see How to Clear
+            Error States.
+          + To filter the job list, click the Customize button. For more
+            information, see How to Filter the Job List.
+          + To customize the job control display, click the Customize
+            button. For more information, see How to Customize the Job
+            Control Display.
+
+How to Modify Job Attributes
+
+    1. Click a pending or running job on the and Job Control dialog box
+       and then click the Qalter button.
+       The Submit Job dialog box appears. All the entries of the dialog
+       box correspond to the attributes of the job that were defined when
+       the job was submitted.
+
+   Note
+   Entries that cannot be changed are grayed out.
+    2. Edit available entries appropriately.
+    3. Click the Qalter button, a substitute for the Submit button on the
+       Submit Job dialog box, to register changes with the Grid Engine
+       system.
+
+How to Change Job Priority
+
+    1. Select a pending or running job on the Job Control dialog box and
+       then click the Priority button.
+       The priority dialog box appears, as shown below. This dialog box
+       enables you to change the priority of selected pending or running
+       jobs. The priority ranks a single user's jobs among themselves.
+       Priority tells the scheduler how to choose among a single user's
+       jobs when several jobs are in the system simultaneously.
+       "Dialog box titled "Enter an Integer. Shows a field for typing a
+       number for job priority. Shows OK
+    2. Enter a new priority for the selected job(s) in the field and then
+       click OK.
+
+How to Put Jobs and Array Job Tasks on Hold
+
+   As long as any hold is assigned to a job or an array job task, the job
+   or array job task is not eligible for running.
+   Note
+   User holds can be set or reset by the job owner as well as by Grid
+   Engine managers and operators. Operator holds can be set or reset by
+   managers and operators. System holds can be set or reset by managers
+   only. You can also set or reset holds by using the qalter, qhold, and
+   qrls commands.
+
+     * To put a job on hold, select a pending job from the Job Control
+       Dialog dialog box, shown above, and click Hold.
+       The Set Hold dialog box appears. The Set Hold dialog box enables
+       you to set and reset user, operator, and system holds.
+     * To put an array task on hold, do the following:
+         1. Select a pending job from the Job Control dialog box and click
+            Hold.
+            The Set Hold dialog box appears.
+         2. Use the Tasks field to put a hold on particular subtasks of an
+            array job.
+            The task ID range specified in this field can be a single
+            number, a simple range of the form n-m, or a range with a step
+            size. For example, the task ID range specified by 2-10:2
+            results in the task ID indexes 2, 4, 6, 8, and 10. This range
+            represents a total of five identical tasks, with the
+            environment variable SGE_TASK_ID containing one of the five
+            index numbers. For detailed information about job holds, see
+            the qsub(1) man page.
+
+How to Force Jobs
+
+   Only running jobs can be suspended or resumed. Only pending jobs can be
+   rescheduled, held back and modified, in priority as well as in other
+   attributes.
+    1. To force jobs, select a job from the Pending Jobs tab or the
+       Running Jobs tab and then select the Force option.
+    2. Click the Suspend, Resume, or Delete buttons.
+
+   Note
+   You can force suspending, resuming, and deleting jobs. In other words,
+   you can register these actions with sge_qmaster without notifying the
+   sge_execd that controls the jobs. Forcing is useful when the
+   corresponding sge_execd is unreachable, for example, due to network
+   problems.
+
+   Suspension of a job sends the signal SIGSTOP to the process group of
+   the job with the UNIX kill command. SIGSTOP halts the job and no longer
+   consumes CPU time. Resumption of the job sends the signal SIGCONT,
+   thereby unsuspending the job. See the kill(1) man page for your system
+   for more information on signaling processes.
+
+How to Verify Job Consistency
+
+   Note
+   The Verify flag on the Submit Job dialog box has a special meaning when
+   the flag is used in the Qalter mode. You can check pending jobs for
+   consistency, and you can investigate why jobs are not yet scheduled.
+    1. Select a pending job from the Job Control dialog box and and click
+       the Qalter button.
+    2. Click the Advanced tab.
+    3. Select the desired consistency-checking mode for the Verify flag,
+       and then click Qalter.
+
+   Note
+   The system displays warnings on inconsistencies, depending on the
+   checking mode you select. See How to Submit Advanced Jobs With QMON
+   and the -w option on the qalter(1) man page for more information.
+
+How to Use the Why? Button to Get Information About Pending Jobs
+
+   Note
+   The Why? button delivers meaningful output only if the scheduler
+   configuration parameter schedd_job_info is set to true. See the
+   sched_conf(5) man page.
+
+   To get information about pending jobs, select a pending job from the
+   Job Control dialog box and click the Why? button.
+   The Object Browser dialog box appears. As shown below, this dialog box
+   displays a list of reasons that prevented the scheduler from
+   dispatching the job in its most recent pass.
+   Note
+   The displayed scheduler information relates to the last scheduling
+   interval. The information might not be accurate by the time you
+   investigate why your job was not scheduled.
+
+   "Dialog box titled Browser. Shows scheduling information. Shows stdout
+
+How to Clear Error States
+
+   To clear error states, select a pending job from the Job Control dialog
+   box and then click the Clear Error button.
+   This removes an error state from a pending job that failed due to a
+   job-dependent problem. For example, the job might have insufficient
+   permissions to write to the specified job output file.
+
+   Error states appear in red text in the pending jobs list. You should
+   remove jobs only after you correct the error condition, for example,
+   using qalter. Such error conditions are automatically reported through
+   email if the job requests to send email when the job is aborted. For
+   example, the job might have been aborted with the qsub -m a command.
+
+How to Filter the Job List
+
+    1. Click the Customize button in the Job Control dialog box.
+       The Job Customize box appears, as shown below.
+    2. Click the Filter Jobs tab.
+    Example - Filtering the Job List
+       The following example of the filtering facility selects only jobs
+       that are suitable to be run on the architecture solaris64.
+       Dialog box titled Job Customize. Shows the Filter Jobs tab with a
+       list of filter resources and a list of available resources.
+       The following figure shows the resulting Running Jobs tab of the
+       Job Control dialog box.
+       Dialog box titled Job Customize. Shows the Filter Jobs tab with a
+       list of filter resources and a list of available resources.
+       The Job Control dialog box that is shown in the previous figure is
+       also an example of how QMON displays array jobs.
+
+How to Customize the Job Control Display
+
+    1. Click the Customize button on the Job Control dialog box.
+       The Job Customize dialog box appears.
+    2. Click the Select Job Fields tab.
+       A sample Select Job Fields tab is shown in the following figure.
+       Dialog box titled Job Customize. Shows the Select Jobs Field tab
+       with a list of available fields and a list of selected fields.
+    3. Use the Job Customize dialog box to configure the set of
+       information to display.
+       You can select more entries of the job object to be displayed.
+    4. Use the Save button on the Job Customize dialog box to store the
+       customizations in the file .qmon_preferences.
+       This file is located in the user's home directory. By saving your
+       customizations, you redefine the appearance of the Job Control
+       dialog box.
+
+How to Get Additional Information About Jobs With the QMON Object Browser
+
+   You can use the QMON Object Browser to quickly retrieve additional
+   information about jobs without having to customize the Job Control
+   dialog box, as explained in Monitoring and Controlling Jobs With
+   QMON.
+
+   To display information about jobs using the Object Browser, use one of
+   the following methods:
+     * From the Job Control dialog box, move the pointer over a job name.
+     * From the Browser dialog box, click Job.
+
+Monitoring and Controlling Jobs From the Command Line
+
+How to Monitor Jobs With qstat
+
+   The three primary ways to use the qstat command to monitor jobs are as
+   follows:
+     * qstat – Without options, this command will only display a list of
+       jobs with no queue status information. The purpose of most of the
+       columns should be self-explanatory. The state column, however,
+       contains single character codes with the following meaning: r for
+       running, s for suspended, q for queued, and w for waiting.
+     * qstat -f – This command causes summary information on all queues to
+       be displayed, along with the queued job list.
+       The display is divided into the following two sections:
+          + Available Queues - This section displays the status of all
+            available queues. The first line of the queue section defines
+            the meaning of the columns with respect to the queues that are
+            listed. The queues are separated by horizontal lines. If jobs
+            run in a queue, the job names appear below the associated
+            queue in the same format as in the qstat command in its first
+            form. The columns of the queue description provide the
+            following information:
+               o qtype – Queue type. Queue type is either B (batch) or I
+                 (interactive).
+               o used/free – Count of used and free job slots in the
+                 queue.
+               o states – State of the queue. See the qstat(1) man page
+                 for detailed information about queue states.
+          + Pending Jobs – This section shows the status of the
+            sge_qmaster job spool area. The pending jobs in the second
+            output section are also listed as in qstat`s first form.
+     * qstat -ext – This command contains details such as up-to-date job
+       usage and tickets assigned to a job.
+
+   The following information is displayed:
+     *
+          + The usage and ticket values assigned to a job, shown in the
+            following columns:
+               o cpu/mem/io – Currently accumulated CPU, memory, and I/O
+                 usage.
+               o tckts – Total number of tickets assigned to the job.
+               o ovrts – Override tickets assigned through qalter -ot.
+               o otckt – Tickets assigned through the override policy.
+               o ftckt – Tickets assigned through the functional policy.
+               o stckt – Tickets assigned through the share-based policy.
+               o Share - Current Resource share that each job has with
+                 respect to the usage generated by all jobs in the
+                 cluster.
+          + The deadline initiation time in the column deadline, if
+            applicable.
+
+   Additional options to the qstat command enhance the functionality. Use
+   the -r option to display the resource requirements of submitted jobs.
+   Furthermore, the output can be restricted to a certain user or to a
+   specific queue. You can use the -l option to specify resource
+   requirements, as described in Defining Resource Requirements, for
+   the qsub command. If resource requirements are used, only those queues,
+   and the jobs that are running in those queues, are displayed that match
+   the resource requirement specified by qstat.
+   Note
+   The qstat command has been enhanced so that the administrator and the
+   user may define files that can contain useful options. See the
+   sge_qstat(5) man page. A cluster-wide sge_qstat file may be placed
+   under $xxQS_NAME_Sxx_ROOT/$xxQS_NAME_Sxx_CELL/common/sge_qstat. The
+   user private file is processed under the location $HOME/.sge_qstat. The
+   home directory request file has the highest precedence, then the
+   cluster global file. You can use the command line to override the flags
+   contained in a file.
+
+   See the qstat(1) man page for a detailed explanation of the qstat
+   output format.
+
+   The following examples show output from the qstat and qstat -f
+   commands.
+
+Example – qstat -f Output
+
+queuename                  qtype  used/free   load_avg   arch         states
+
+
+dq                         BIP    0/1         99.99      sun4         au
+
+durin.q                    BIP    2/2         0.36       sun4
+  231     0    hydra              craig       r          07/13/96     20:27:15
+  MASTER
+  232     0    compile            penny       r          07/13/96     20:30:40
+  MASTER
+
+dwain.q                    BIP    3/3         0.36       sun4
+  230     0    blackhole          don         r          07/13/96     20:26:10
+  MASTER
+  233     0    mac                elaine      r          07/13/96     20:30:40
+  MASTER
+  234     0    golf               shannon     r          07/13/96     20:31:44
+  MASTER
+
+fq                         BIP    0/3         0.36       sun4
+
+################################################################################
+
+- PENDING JOBS - PENDING JOBS - PENDING JOBS - PENDING JOBS - PENDING JOBS -
+
+################################################################################
+
+  236     5    word               elaine      qw         07/13/96     20:32:07
+
+  235     0    andrun             penny       qw         07/13/96     20:31:43
+
+Example – qstat Output
+
+job-ID   prior   name         user      state   submit/start at     queue      f
+unction
+231      0       hydra        craig     r       07/13/96            durin.q    M
+ASTER
+                                                20:27:15
+232      0       compile      penny     r       07/13/96            durin.q    M
+ASTER
+                                                20:30:40
+230      0       blackhole    don       r       07/13/96            dwain.q    M
+ASTER
+                                                20:26:10
+233      0       mac          elaine    r       07/13/96            dwain.q    M
+ASTER
+                                                20:30:40
+234      0       golf         shannon   r       07/13/96            dwain.q    M
+ASTER
+                                                20:31:44
+236      5       word         elaine    qw      07/13/96
+                                                20:32:07
+235      0       andrun       penny     qw      07/13/96 20:31:43
+
+How to Control Jobs With qdel and qmod
+
+   To control jobs from the command line, type one of the following
+   commands with the appropriate arguments.
+% qdel <arguments>
+% qmod <arguments>
+
+   Use the qdel command to delete jobs, regardless of whether the jobs are
+   running or are spooled. Use the qmod command to suspend and resume
+   (unsuspend) jobs already running.
+
+   For both commands, you need to know the job identification number,
+   which is displayed in response to a successful qsub command. If you
+   forget the number, you can retrieve it with qstat. See Monitoring
+   Jobs With qstat.
+
+   The following list provides several examples of the qdel and qmod
+   commands:
+% qdel <job-id>
+% qdel -f <job-id1>, <job-id2>
+% qmod -s <job-id>
+% qmod -us -f <job-id1>, <job-id2>
+% qmod -s <job-id.task-id-range>
+
+   In order to delete, suspend, or resume a job, you must be the owner of
+   the job or a Grid Engine manager or operator. See Managers,
+   Operators, and Owners.
+
+   You can use the -f (force) option with both commands to register a job
+   status change at sge_qmaster without contacting sge_execd. You might
+   want to use the force option in cases where sge_execd is unreachable,
+   for example, due to network problems. The -f option is intended for use
+   only by the administrator. In the case of qdel, however, users can
+   force deletion of their own jobs if the flag ENABLE_FORCED_QDEL in the
+   cluster configuration qmaster_params entry is set. See the sge_conf(5)
+   man page for more information.
+
+Monitoring and Controlling Jobs by Email
+
+How to Monitor Jobs by Email
+
+   From the command line, type the following command with appropriate
+   arguments.
+% qsub <arguments>
+
+   The qsub -m command requests email to be sent to the user who submitted
+   a job or to the email addresses specified by the -M flag if certain
+   events occur. See the qsub(1) man page for a description of the flags.
+   An argument to the -m option specifies the events. The following
+   arguments are available:
+     * b – Send email at the beginning of the job.
+     * e – Send email at the end of the job.
+     * a – Send email when the job is rescheduled or aborted For example,
+       by using the qdel command.
+     * s – Send email when the job is suspended.
+     * n – Do not send email. n is the default.
+
+   Use a string made up of one or more of the letter arguments to specify
+   several of these options with a single -m option. For example, -m be
+   sends email at the beginning and at the end of a job.
+
+   You can also use QMON's Submit Job dialog box to configure these mail
+   events. See How to Submit Advanced Jobs With QMON.

@@ -1,0 +1,266 @@
+HOSTNAME                ARCH         NCPU  LOAD  MEMTOT  MEMUSE  SWAPTO  SWAPUS
+-------------------------------------------------------------------------------
+global                  -               -     -       -       -       -       -
+compute-0-0             lx26-amd64      8  2.35   15.7G  372.5M  996.2M     0.0
+   job-ID  prior   name       user         state submit/start at     queue      master ja-task-ID 
+   ----------------------------------------------------------------------------------------------
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:26:19 ibhoy.q@co MASTER 12382
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:34:04 ibhoy.q@co MASTER 12456
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:43:04 ibhoy.q@co MASTER 12566
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:45:19 ibhoy.q@co MASTER 12587
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:45:19 ibhoy.q@co MASTER 12588
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:45:49 ibhoy.q@co MASTER 12593
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:45:49 ibhoy.q@co MASTER 12594
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:49:19 ibhoy.q@co MASTER 12619
+compute-0-1             lx26-amd64      8  1.71   15.7G  219.6M  996.2M    4.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:31:19 ibhoy.q@co MASTER 12428
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:33:49 ibhoy.q@co MASTER 12455
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:39:34 ibhoy.q@co MASTER 12516
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:39:49 ibhoy.q@co MASTER 12520
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:34 ibhoy.q@co MASTER 12579
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:34 ibhoy.q@co MASTER 12581
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:48:19 ibhoy.q@co MASTER 12611
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:50:49 ibhoy.q@co MASTER 12630
+compute-0-10            lx26-amd64      8  2.35   15.7G  267.4M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:13:19 ibhoy.q@co MASTER 12280
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:28:19 ibhoy.q@co MASTER 12407
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:35:19 ibhoy.q@co MASTER 12474
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:40:49 ibhoy.q@co MASTER 12528
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:40:49 ibhoy.q@co MASTER 12530
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:48:19 ibhoy.q@co MASTER 12610
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:49:04 ibhoy.q@co MASTER 12617
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:49:04 ibhoy.q@co MASTER 12618
+compute-0-11            lx26-amd64      8  2.81   15.7G  229.8M  996.2M    4.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:27:04 ibhoy.q@co MASTER 12393
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:27:04 ibhoy.q@co MASTER 12394
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:49 ibhoy.q@co MASTER 12444
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:49 ibhoy.q@co MASTER 12446
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:39:34 ibhoy.q@co MASTER 12515
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:39:34 ibhoy.q@co MASTER 12517
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:39:34 ibhoy.q@co MASTER 12518
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:04 ibhoy.q@co MASTER 12550
+compute-0-12            lx26-amd64      8  1.75   15.7G  243.6M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:13:19 ibhoy.q@co MASTER 12278
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:34:34 ibhoy.q@co MASTER 12468
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:39:49 ibhoy.q@co MASTER 12519
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:39:49 ibhoy.q@co MASTER 12521
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:34 ibhoy.q@co MASTER 12562
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:34 ibhoy.q@co MASTER 12578
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:47:19 ibhoy.q@co MASTER 12607
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:50:19 ibhoy.q@co MASTER 12626
+compute-0-13            lx26-amd64      8  1.77   15.7G  297.7M  996.2M     0.0
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:28:34 ibhoy.q@co MASTER 12409
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:36:49 ibhoy.q@co MASTER 12489
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:34 ibhoy.q@co MASTER 12542
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:34 ibhoy.q@co MASTER 12543
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:04 ibhoy.q@co MASTER 12551
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:04 ibhoy.q@co MASTER 12552
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:49 ibhoy.q@co MASTER 12586
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:49:04 ibhoy.q@co MASTER 12616
+compute-0-14            lx26-amd64      8  2.21   15.7G  274.1M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:26:34 ibhoy.q@co MASTER 12385
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:34:04 ibhoy.q@co MASTER 12461
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:36:49 ibhoy.q@co MASTER 12490
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:19 ibhoy.q@co MASTER 12534
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:19 ibhoy.q@co MASTER 12537
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:46:49 ibhoy.q@co MASTER 12603
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:50:04 ibhoy.q@co MASTER 12623
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:50:49 ibhoy.q@co MASTER 12632
+compute-0-15            lx26-amd64      8  2.13   15.7G  301.3M  996.2M     0.0
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:19:19 ibhoy.q@co MASTER 12328
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:31:19 ibhoy.q@co MASTER 12429
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:36:04 ibhoy.q@co MASTER 12486
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:38:34 ibhoy.q@co MASTER 12509
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:34 ibhoy.q@co MASTER 12539
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:46:34 ibhoy.q@co MASTER 12600
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:46:34 ibhoy.q@co MASTER 12601
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:50:49 ibhoy.q@co MASTER 12631
+compute-0-16            lx26-amd64      8  2.22   15.7G  287.1M  996.2M     0.0
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:11:49 ibhoy.q@co MASTER 12261
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:34 ibhoy.q@co MASTER 12443
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:49 ibhoy.q@co MASTER 12448
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:49 ibhoy.q@co MASTER 12450
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:49 ibhoy.q@co MASTER 12452
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:39:04 ibhoy.q@co MASTER 12511
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:40:34 ibhoy.q@co MASTER 12527
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:49 ibhoy.q@co MASTER 12584
+compute-0-17            lx26-amd64      8  2.90   15.7G  262.0M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:16:04 ibhoy.q@co MASTER 12306
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:16:04 ibhoy.q@co MASTER 12308
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:19:34 ibhoy.q@co MASTER 12329
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:31:19 ibhoy.q@co MASTER 12426
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:34:34 ibhoy.q@co MASTER 12469
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:40:49 ibhoy.q@co MASTER 12531
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:40:49 ibhoy.q@co MASTER 12532
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:45:49 ibhoy.q@co MASTER 12592
+compute-0-18            lx26-amd64      8  2.37   15.7G  259.8M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:07:34 ibhoy.q@co MASTER 12230
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:17:34 ibhoy.q@co MASTER 12317
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:27:19 ibhoy.q@co MASTER 12398
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:40:04 ibhoy.q@co MASTER 12523
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:40:19 ibhoy.q@co MASTER 12525
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:34 ibhoy.q@co MASTER 12580
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:34 ibhoy.q@co MASTER 12582
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:48:34 ibhoy.q@co MASTER 12613
+compute-0-19            lx26-amd64      8  2.14   15.7G  236.4M  996.2M    4.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:12:34 ibhoy.q@co MASTER 12265
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:24:34 ibhoy.q@co MASTER 12366
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:24:34 ibhoy.q@co MASTER 12367
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:24:34 ibhoy.q@co MASTER 12368
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:28:19 ibhoy.q@co MASTER 12406
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:37:34 ibhoy.q@co MASTER 12500
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:37:34 ibhoy.q@co MASTER 12501
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:43:04 ibhoy.q@co MASTER 12567
+compute-0-2             lx26-amd64      8  2.18   15.7G  243.3M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:23:49 ibhoy.q@co MASTER 12357
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:27:19 ibhoy.q@co MASTER 12396
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:34 ibhoy.q@co MASTER 12441
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:34:19 ibhoy.q@co MASTER 12465
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:37:34 ibhoy.q@co MASTER 12498
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:19 ibhoy.q@co MASTER 12536
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:43:19 ibhoy.q@co MASTER 12568
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:46:04 ibhoy.q@co MASTER 12595
+compute-0-20            lx26-amd64      8  2.26   15.7G  256.0M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:13:04 ibhoy.q@co MASTER 12277
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:23:49 ibhoy.q@co MASTER 12356
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:27:49 ibhoy.q@co MASTER 12400
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:36:04 ibhoy.q@co MASTER 12484
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:49 ibhoy.q@co MASTER 12545
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:50:34 ibhoy.q@co MASTER 12628
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:50:34 ibhoy.q@co MASTER 12629
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:50:49 ibhoy.q@co MASTER 12633
+compute-0-21            lx26-amd64      8  2.46   15.7G  266.1M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:24:49 ibhoy.q@co MASTER 12371
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:04 ibhoy.q@co MASTER 12435
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:04 ibhoy.q@co MASTER 12438
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:19 ibhoy.q@co MASTER 12553
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:19 ibhoy.q@co MASTER 12555
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:19 ibhoy.q@co MASTER 12558
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:19 ibhoy.q@co MASTER 12559
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:49 ibhoy.q@co MASTER 12585
+compute-0-22            lx26-amd64      8  2.26   15.7G  282.1M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:18:04 ibhoy.q@co MASTER 12320
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:22:19 ibhoy.q@co MASTER 12348
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:34:19 ibhoy.q@co MASTER 12464
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:37:19 ibhoy.q@co MASTER 12495
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:40:04 ibhoy.q@co MASTER 12522
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:49 ibhoy.q@co MASTER 12564
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:46:19 ibhoy.q@co MASTER 12597
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:49:04 ibhoy.q@co MASTER 12615
+compute-0-23            lx26-amd64      8  1.36   15.7G  305.0M  996.2M     0.0
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:16:19 ibhoy.q@co MASTER 12309
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:19:49 ibhoy.q@co MASTER 12330
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:04 ibhoy.q@co MASTER 12437
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:35:49 ibhoy.q@co MASTER 12480
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:34 ibhoy.q@co MASTER 12538
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:34 ibhoy.q@co MASTER 12540
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:19 ibhoy.q@co MASTER 12575
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:47:19 ibhoy.q@co MASTER 12606
+compute-0-24            lx26-amd64      8  2.55   15.7G  321.6M  996.2M     0.0
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:26:49 ibhoy.q@co MASTER 12387
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:30:04 ibhoy.q@co MASTER 12418
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:37:49 ibhoy.q@co MASTER 12503
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:38:19 ibhoy.q@co MASTER 12508
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:49 ibhoy.q@co MASTER 12546
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:49 ibhoy.q@co MASTER 12548
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:46:19 ibhoy.q@co MASTER 12599
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:50:19 ibhoy.q@co MASTER 12627
+compute-0-25            lx26-amd64      8  2.22   15.7G  254.3M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:18:19 ibhoy.q@co MASTER 12322
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:24:19 ibhoy.q@co MASTER 12362
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:30:04 ibhoy.q@co MASTER 12417
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:30:34 ibhoy.q@co MASTER 12423
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:49 ibhoy.q@co MASTER 12544
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:34 ibhoy.q@co MASTER 12560
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:34 ibhoy.q@co MASTER 12561
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:34 ibhoy.q@co MASTER 12563
+compute-0-26            lx26-amd64      8  1.77   15.7G  257.3M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:25:04 ibhoy.q@co MASTER 12374
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:34:04 ibhoy.q@co MASTER 12457
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:34:04 ibhoy.q@co MASTER 12460
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:34:04 ibhoy.q@co MASTER 12462
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:19 ibhoy.q@co MASTER 12556
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:19 ibhoy.q@co MASTER 12573
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:46:49 ibhoy.q@co MASTER 12604
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:50:19 ibhoy.q@co MASTER 12624
+compute-0-27            lx26-amd64      8  2.22   15.7G  257.9M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:16:04 ibhoy.q@co MASTER 12302
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:25:49 ibhoy.q@co MASTER 12378
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:28:19 ibhoy.q@co MASTER 12405
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:37:19 ibhoy.q@co MASTER 12492
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:40:19 ibhoy.q@co MASTER 12524
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:43:49 ibhoy.q@co MASTER 12570
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:19 ibhoy.q@co MASTER 12574
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:47:49 ibhoy.q@co MASTER 12608
+compute-0-28            lx26-amd64      8  2.06   15.7G  283.7M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:00:49 ibhoy.q@co MASTER 12169
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:14:34 ibhoy.q@co MASTER 12290
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:28:04 ibhoy.q@co MASTER 12401
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:37:19 ibhoy.q@co MASTER 12493
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:38:04 ibhoy.q@co MASTER 12504
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:38:04 ibhoy.q@co MASTER 12506
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:43:34 ibhoy.q@co MASTER 12569
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:50:19 ibhoy.q@co MASTER 12625
+compute-0-29            lx26-amd64      8  2.43   15.7G  256.5M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:49 ibhoy.q@co MASTER 12445
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:49 ibhoy.q@co MASTER 12447
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:49 ibhoy.q@co MASTER 12449
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:49 ibhoy.q@co MASTER 12451
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:35:34 ibhoy.q@co MASTER 12477
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:34 ibhoy.q@co MASTER 12541
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:48:49 ibhoy.q@co MASTER 12614
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:49:19 ibhoy.q@co MASTER 12620
+compute-0-3             lx26-amd64      8  1.92   15.7G  264.8M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:23:49 ibhoy.q@co MASTER 12361
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:24:19 ibhoy.q@co MASTER 12364
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:36:49 ibhoy.q@co MASTER 12488
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:37:19 ibhoy.q@co MASTER 12496
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:37:34 ibhoy.q@co MASTER 12502
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:49 ibhoy.q@co MASTER 12565
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:45:34 ibhoy.q@co MASTER 12589
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:45:49 ibhoy.q@co MASTER 12591
+compute-0-4             lx26-amd64      8  2.16   15.7G  245.9M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:28:04 ibhoy.q@co MASTER 12403
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:28:04 ibhoy.q@co MASTER 12404
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:31:04 ibhoy.q@co MASTER 12425
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:35:49 ibhoy.q@co MASTER 12481
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:38:04 ibhoy.q@co MASTER 12507
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:04 ibhoy.q@co MASTER 12549
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:19 ibhoy.q@co MASTER 12554
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:49 ibhoy.q@co MASTER 12583
+compute-0-5             lx26-amd64      8  2.79   15.7G  240.6M  996.2M   48.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:12:19 ibhoy.q@co MASTER 12264
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:29:19 ibhoy.q@co MASTER 12411
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:32:19 ibhoy.q@co MASTER 12440
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:36:04 ibhoy.q@co MASTER 12482
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:04 ibhoy.q@co MASTER 12533
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:42:19 ibhoy.q@co MASTER 12557
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:19 ibhoy.q@co MASTER 12576
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:47:49 ibhoy.q@co MASTER 12609
+compute-0-6             lx26-amd64      8  1.72   15.7G  282.3M  996.2M     0.0
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:21:04 ibhoy.q@co MASTER 12341
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:34:19 ibhoy.q@co MASTER 12463
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:34:19 ibhoy.q@co MASTER 12466
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:34:19 ibhoy.q@co MASTER 12467
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:37:34 ibhoy.q@co MASTER 12499
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:46:19 ibhoy.q@co MASTER 12596
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:46:49 ibhoy.q@co MASTER 12602
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:48:34 ibhoy.q@co MASTER 12612
+compute-0-7             lx26-amd64      8  1.95   15.7G  260.1M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:27:04 ibhoy.q@co MASTER 12392
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:30:04 ibhoy.q@co MASTER 12420
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:31:49 ibhoy.q@co MASTER 12434
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:35:19 ibhoy.q@co MASTER 12476
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:38:04 ibhoy.q@co MASTER 12505
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:41:19 ibhoy.q@co MASTER 12535
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:45:49 ibhoy.q@co MASTER 12590
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:46:19 ibhoy.q@co MASTER 12598
+compute-0-9             lx26-amd64      8  2.83   15.7G  260.2M  996.2M   20.0K
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:26:49 ibhoy.q@co MASTER 12389
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:37:04 ibhoy.q@co MASTER 12491
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:43:49 ibhoy.q@co MASTER 12571
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:43:49 ibhoy.q@co MASTER 12572
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:44:19 ibhoy.q@co MASTER 12577
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:46:49 ibhoy.q@co MASTER 12605
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:49:34 ibhoy.q@co MASTER 12621
+       670 0.55500 AUtest     larbiza      r     10/29/2010 17:49:34 ibhoy.q@co MASTER 12622

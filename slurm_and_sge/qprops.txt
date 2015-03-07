@@ -1,0 +1,121 @@
+Displaying Queues and Queue Properties
+
+     * Page restrictions apply
+     * Attachments:2
+     * Added by j_critchlow, last edited by Sandra.Konta on Jan
+       14, 2009  (view change)
+
+   Comment:
+
+   Searching Sun Grid Engine 6.2
+
+   ____________________
+   Go
+
+   Sun Grid Engine Information Center
+   Using Sun Grid Engine
+   Index
+     __________________________________________________________________
+
+Displaying Queues and Queue Properties
+
+   To make the best use of the Grid Engine system at your site, you should
+   be familiar with the queue structure. You should also be familiar with
+   the properties of the queues that are configured for your Grid Engine
+   system.
+     * Displaying a List of Queues
+
+     * How to Display a List of Queues With QMON
+     * Displaying a List of Queues From the Command Line
+
+     Displaying Queue Properties
+     * How to Display Queue Properties With QMON
+     * Displaying Queue Properties From the Command Line
+     * Interpreting Queue Property Information
+
+Displaying a List of Queues
+
+   You can use either QMON or the command line to display a list of
+   queues.
+
+How to Display a List of Queues With QMON
+
+    1. Launch the QMON Main Control window.
+    2. Click the Queue Control button.
+       The Cluster Queue Control dialog box appears. Queue Control dialog
+       box provides a quick overview of the installed queues and their
+       current status.
+
+Displaying a List of Queues From the Command Line
+
+   To display a list of queues from the command line, type the following
+   command:
+% qconf -sql
+
+Displaying Queue Properties
+
+   You can use either QMON or the command line to display queue
+   properties.
+
+How to Display Queue Properties With QMON
+
+    1. Launch the QMON Main Control window.
+    2. Click the Queue Control button.
+       The Cluster Queue Control dialog box appears.
+    3. Select a queue, and then click Show Detached Settings.
+       The Browser dialog box appears.
+    4. In the Browser dialog box, click Queue.
+    5. In the Cluster Queue dialog box, click the Queue Instances tab.
+    6. Select a queue instance.
+       The Browser dialog box lists the queue properties for the selected
+       queue instance.
+
+Example – Queue Property Information
+
+   The following figure shows an example of some of the queue property
+   information that is displayed.
+   Figure explained in above text.
+
+Displaying Queue Properties From the Command Line
+
+   To display queue properties from the command line, type the following
+   command:
+% qconf -sq {<queue> | <queue-instance> | <queue-domain>}
+
+   Information like that shown in the previous figure is displayed.
+
+Interpreting Queue Property Information
+
+   You can find a detailed description of each queue property in the
+   queue_conf(5) man page.
+   The following is a list of some of the more important parameters:
+     * qname – The queue name as requested.
+     * hostlist – A list of hosts and host groups associated with the
+       queue.
+     * processors – The processors of a multiprocessor system to which the
+       queue has access.
+
+   Caution
+   Do not change this value unless you are certain that you need to change
+   it.
+     * qtype – The type of job that can run in this queue. Currently, the
+       type can be either batch or interactive.
+     * slots – The number of jobs that can be executed concurrently in
+       that queue.
+     * owner_list – The owners of the queue. For more information, see
+       Managers, Operators, and Owners
+     * user_lists – The user or group identifiers in the user access lists
+       who can access the queue. For more information, see Users and
+       User Categories.
+     * xuser_lists – The user or group identifiers in the user access
+       lists who cannot access the queue. For more information, see
+       Users and User Categories.
+     * project_lists – The jobs submitted with the project identifiers
+       that can access the queue. For more information, see Defining
+       Projects.
+     * xproject_lists – The jobs submitted with the project identifiers
+       that cannot access the queue. For more information, see
+       Defining Projects.
+     * complex_values – Assigns capacities as provided for this queue for
+       certain complex resource attributes. For more information, see
+       Requestable Attributes.

@@ -1,0 +1,617 @@
+The uppmax
+SLURM user guide
+
+
+   At UPPMAX we use [63]SLURM as our batch system to allow a fair and
+   efficient usage of the systems.
+
+Some Limits
+
+     * There is a job walltime limit of ten days (240 hours).
+     * We restrict each user to at most 5000 running and waiting jobs in
+       total.
+     * Each project has a 30 days running allocation of CPU hours. We do
+       not forbid running jobs after the allocation is overdrafted, but
+       instead allow to submit jobs with a lower queue priority, so that
+       you may be able to run your jobs anyway, if a sufficient number of
+       nodes happens to be free on the system.
+     * Very wide jobs will only be started within a maintenance window
+       (just before the maintenance window or at the end of the
+       maintenance window). These are planned for the first Wednesday of
+       each month. On Milou a "very wide" job asks for 56 nodes or more.
+       On Tintin a "very wide" job asks for 54 nodes or more.
+
+Convenience Variables
+
+     * $SNIC_TMP - Path to node-local temporary disk space
+       The $SNIC_TMP variable contains the path to a node-local temporary
+       file directory that you can use when running your jobs, in order to
+       get maxiumum disk performance (since the disks are local to the
+       current compute node). This directory will be automatically created
+       on your (first) compute node before the job starts and
+       automatically deleted when the job has finished.
+       The path specified in $SNIC_TMP is equal to the path:
+       /scratch/$SLURM_JOB_ID, where the job variable $SLURM_JOB_ID
+       contains the unique job identifier of your job.
+       WARNING: Please note, that in your "core" (see below) jobs, if you
+       write data in the /scratch directory but outside of the
+       /scratch/$SLURM_JOB_ID directory, your data may be automatically
+       deleted during your job run.
+
+Introduction to SLURM
+
+   Nearly all of the compute power of the UPPMAX clusters are found in the
+   compute nodes and SLURM is the tool to utilize that power.
+
+   You can use UPPMAX log in nodes interactively, e.g. to quickly test
+   your algorithms or explore the computing environment, but the grand
+   potential is to give the UPPMAX clusters bigger chunks of work packaged
+   into a batch script.
+
+SLURM Commands
+
+   The SLURM system is accessed using the following commands:
+     * interactive - Start an interactive session
+     * sbatch - Submit and run a batch job script
+     * srun - Typically used inside batch job scripts for running parallel
+       jobs (See examples further down)
+     * scancel - Cancel one or more of your jobs.
+
+Specifying job parameters
+
+   Whether you use the UPPMAX clusters interactively or in batch mode, you
+   always have to specify a few things, like number of cores needed,
+   running time et.c. These things can be specified in two ways:
+     * Either as flags sent to the different SLURM commands (sbatch, srun,
+       the interactive command, et.c.), like so:
+sbatch -A p2012999 -p core -n 1 -t 12:00:00 -J some_job_name my_job_script_file.
+sh
+     * or, when using the sbatch command, it can be specified inside the
+       job script file itself, by using special "SBATCH" comments, for
+       example:
+#!/bin/bash -l
+
+#SBATCH -A p2012999
+#SBATCH -p core
+#SBATCH -n 1
+#SBATCH -t 12:00:00
+#SBATCH -J some_job_name
+
+... the actual job script code ...
+       If doing this, then one will only need to start the script like so,
+       without any flags:
+sbatch my_job_script_file.sh
+
+Required job parameters
+
+   These are the things you typically need to specify for each job
+   (required parameters might differ sligthly depending on which other
+   parameters are set):
+     * Which project should be accounted for the running time (Format: -A
+       [project name])
+          + For example, if you project is named p2010999, you specify -A
+            p2010999
+          + You can find your current projects (and other projects that
+            you have run jobs in) with the program projinfo.
+     * What partition to choose (Format: -p [partition])
+          + Partitions are a way to tell what type of job you are
+            submitting, e.g. if it needs to reserve a whole node, or part
+            of a node.
+          + If you need only part of a node, i.e. less cores than the
+            number of cores per node or less RAM than the amount of RAM of
+            one node, you specify "-p core", otherwise you specify -p
+            node.
+            (More about this later).
+     * If you specified the "node" partition above and want to run on less
+       than the number of cores per node (for example, running something
+       in only one process per node) you have to give the number of nodes
+       (Format: -N [no of nodes]) in addition to the number of cores.
+     * How many cores you will need (Format: -n [no_of_cores]).
+          + The most atomic compute element to specify is -n 1, i.e. one
+            core.
+          + When using the "node" partition, remember that the different
+            clusters at UPPMAX has different number of cores per node, so
+            you will need to multiply the number of nodes you have
+            specified, to get the correct number of cores. An example for
+            Tintin, specifying 2 nodes, and thus 32 (2 * 16) cpus, would
+            be -n 32. See the [64]table below for number of cores per
+            cluster.
+     * How long you want to reserve those nodes/cores (Format: -t
+       d-hh:mm:ss).
+          + Specification is in days, hours, minutes and (not very useful)
+            seconds. A three day timelimit is given as -t 3-00:00:00
+            Twenty minutes is written as -t 20:00 and three hours as -t
+            3:00:00
+          + A long time will increase the chance that your computations is
+            finished within time, while a shorter time will typically make
+            your job start faster.
+          + Your project will be accounted for the time the job runs,
+            which is not necessarily as long as your timelimit. If your
+            job goes over the timelimit, it will be automatically
+            cancelled.
+
+   The "--qos=short" option for test runs shorter than 15 min
+
+   For short test runs shorter than 15 min, add the --qos=short
+   specification, which gives you a high priority. This is not for
+   production jobs, and you are limited to 15 minutes maximum four nodes,
+   as well as a maximum of two such jobs simultaneously.
+
+Example 1: Interactive job on one core
+
+interactive -n 1 -t 2:00:00 -A p2010999
+
+   Automatically, you will get an interactive session with the command
+   interpreter "bash" on one compute core.
+
+Example 2: Interactive job on four nodes
+
+[lka@tintin1 ~]$ interactive -n 64 -t 15:00 -A p2010999 --qos=short
+[lka@ti83 ~]$ # How to see on what nodes I am running
+[lka@ti83 ~]$ srun hostname -s|sort -u
+ti83
+ti84
+ti85
+ti86
+[lka@ti83 ~]$ # Create the same local directory on all four nodes
+[lka@ti83 ~]$ srun -N 4 -n 4 mkdir /scratch/$SLURM_JOB_ID/indata
+[lka@ti83 ~]$ # Copy indata for my_program to the local directories
+[lka@ti83 ~]$ srun -N 4 -n 4 cp -r ~/glob/indata/* /scratch/$SLURM_JOB_ID/indata
+[lka@ti83 ~]$ #
+[lka@ti83 ~]$ cd ~/glob/testprogram
+[lka@ti83 testprogram]$ module load intel openmpi
+Loaded openMPI 1.4, compiled with intel11.1 (found in /opt/openmpi/1.4intel11.1/
+)
+[lka@ti83 testprogram]$ mpirun -v my_program
+        .
+        .
+        .
+
+   We needed to add -p node, because we used more than one core. If you
+   use at most four nodes and fifteen minutes, you may specify
+   --qos=short, which gives you a tremendously higher queue priority.
+
+   The srun -N 4 -n 4 construction is very useful, when you want to run a
+   command once on each of your nodes. You need to know how many nodes you
+   have asked for; e.g., for eight nodes you will need an srun -N 8 -n 8
+   construction.
+
+Example 3: Using interactive command, to let you run X applications
+
+   If you need to run X applications, please use the interactive command.
+   The easiest usage example is
+interactive -A p2010999
+
+   which sets some default values, to give you the highest queue priority
+   allowed, using e.g. "--qos=short". If you do not like the default
+   values, you can add most options that the salloc command allows. You
+   will get a shell prompt from the screen command (the command "man
+   screen" gives more information) and if you have tried screen and do not
+   like it, please escape from it with an "exec xterm" command. To get
+   some more information about the interactive command, please try
+interactive -h
+
+   You may run one interactive command with a high queue priority at a
+   time, up to a time limit of 12 hours, regardless of your simultaneous
+   use of "--qos=short" jobs.
+
+Example 4: A small batch script, with a Job name
+
+   An example of a small batch script, where we also show how to give your
+   job a name (the "-J" flag):
+#!/bin/bash -l
+#SBATCH -A p2010999
+#SBATCH -p node -n 64
+#SBATCH -t 1-20:00:00
+#SBATCH -J test42
+module load intel openmpi
+cd ~/glob/testprogram
+mpirun my_program
+
+   If you name the batch script file "script-v4", you submit the script
+   with a bash command like
+sbatch script-v4
+
+Monitoring jobs
+
+   To see the status of your program, you can run commands like:
+     * jobinfo
+     * jobinfo -u your_account_name
+     * squeue
+
+   Please also see our page about [65]how the job priority and queue
+   works.
+
+Cancelling jobs
+
+   For various reasons, you might want to terminate your running jobs or
+   remove your waiting jobs from the queue. The command is "scancel" and
+   you can read its documentation with the command "man scancel".
+   Straightforward is to run
+scancel 123456 123457
+
+   to kill two of your jobs, by giving their job number. The command
+scancel -i -u your_account_name
+
+   kills all your jobs, but asks for each job if you really want to
+   terminate that job.
+scancel -u your_account_name --state=pending
+
+   terminates all your waiting jobs, while
+scancel -u your_account_name -n firsttest -t running
+
+   kills all your running jobs that are named "firsttest".
+
+Details about the "core" and "node" partitions
+
+   For example, a normal Tintin node contains 64 GB of RAM and sixteen
+   compute cores. An equal share of RAM for each core would mean that each
+   core gets at most four GB of RAM. This simple calculation gives one of
+   the limits mentioned below for a "core" job.
+
+   Number of cores and amount of memory per node at the different
+   resources at UPPMAX.
+
+      Cluster name Amount of RAM per node [GB] Number of cores per node
+                Amount of RAM per core [GB] Flag to use node
+                               tintin 64 16 4
+                              128     -C mem128GB
+                             halvan 2048 64 32*
+                               milou 128 16 8
+                              256     -C mem256GB
+                              512     -C mem512GB
+
+   *Single core jobs should not be run on halvan. See [66]Halvan User
+   Guide
+
+   You need to choose between running a "core" job or a "node" job. A
+   "core" job must keep within certain limits, to be able to run together
+   with up to fifteen other "core" jobs on a shared node. A job that
+   cannot keep within those limits must run as a "node" job.
+
+   All parallel jobs must run as "node" jobs. Also some serial jobs must
+   run as "node" jobs. You tell Slurm that you need a "node" job with the
+   flag "-p node". (If you forget to tell Slurm, you are by default
+   choosing to run a "core" job.)
+
+   A "core" job:
+     * Will use a part of the resources on a node, from a 1/16 share to a
+       15/16 share on Tintin and Milou
+
+     * Must not demand "-N", "--nodes", "--mem", or "--exclusive".
+
+     * Must not demand to run on a fat node (see below, for an explanation
+       of "fat"), a devel node or a GPU node.
+
+     * Must not use more than the number of GB of RAM for each core per
+       cluster as specified in the table above. Example, on tintin: If a
+       job needs half of the RAM, i.e. 32 GB, you need to reserve also at
+       least half of the cores on the node, i.e. eight cores, with the "-n
+       8" flag
+
+   A "core" job is accounted on your project as one "core hour" (sometimes
+   also named as a "CPU hour") for each wallclock hour per core that it
+   runs. On the other hand, a "node" job is accounted on your project as
+   having used all the cores on all your reserved nodes for each wallclock
+   hour that it runs. Your project will be charged for all the cores you
+   have asked for, even if you don't use all the resources (i.e cores)
+   that you have reserved.
+
+   To run a non-parallel job as a "node" job, might mean that you "pay"
+   for more than you get out of the arrangement. In that case, you are
+   welcome to get in touch with the UPPMAX staff, for a discussion on the
+   best way to run your application. A common solution is to pack 2-(the
+   number of cores per node, e.g. 16 for milou) job tasks into one "node"
+   job, writing something like this in your job script:
+your_application --infile infile1 --outfile outfile1 &
+your_application --infile infile2 --outfile outfile2 &
+your_application --infile infile3 --outfile outfile3 &
+your_application --infile infile4 --outfile outfile4 &
+your_application --infile infile5 --outfile outfile5 &
+your_application --infile infile6 --outfile outfile6 &
+your_application --infile infile7 --outfile outfile7 &
+your_application --infile infile8 --outfile outfile8 &
+your_application --infile infile1 --outfile outfile9 &
+your_application --infile infile2 --outfile outfile10 &
+your_application --infile infile3 --outfile outfile11 &
+your_application --infile infile4 --outfile outfile12 &
+your_application --infile infile5 --outfile outfile13 &
+your_application --infile infile6 --outfile outfile14 &
+your_application --infile infile7 --outfile outfile15 &
+your_application --infile infile8 --outfile outfile16 &
+wait
+
+   This example pinpoints a few details, needed for task packing:
+     * Normally, each task needs individual input and output files.
+
+     * Each application call needs an "&" written at the end of the line,
+       to make it start at the same time as the other application calls.
+
+     * The "wait" command at the bottom tells the job script to wait until
+       all the tasks have run to their normal finish. Otherwise the job
+       and thus also the tasks will terminate prematurely.
+
+   You may specify a node with more RAM, by adding the words like "-C
+   mem128GB" or similar to your job submission line and thus making sure
+   that you will get 128 GB of RAM on each node in your job. Please note
+   the number of nodes with more memory in the table above. Specifying
+   more memory might lead to longer time in the queue for your job.
+
+   From the squeue command, you can get a lot of information, using
+   different command options. Some of these options are used within a
+jobinfo
+
+   command, that tells you about running jobs, gives you some statistics
+   about the UPPMAX resource node status and gives you a list of all
+   waiting jobs, sorted on job priority. The jobinfo command has many
+   option flags, most of them the same as for the squeue command. One of
+   the most useful flags is "-u your_user_account_name" to specify that
+   you want to look only on your jobs.
+
+   The jobinfo command will give an estimate of the starting time for jobs
+   at the top of the queue. You can also use squeue command with the
+   "--start" option.
+
+How to run on a node with GPU on tintin
+
+   Specify partition "gpu", as in example
+$ interactive -A p2010999 -p gpu -n 16 -t 8:00:00
+
+   for running interactively on a GPU-enabled node for up to eight hours.
+
+
+   Please, check the different cluster on what kind of GPUs available.
+
+Specifications for a job on a single, full node
+
+   If you want to run a single application on your node, you specify:
+#SBATCH -p node -n 1
+
+   This application can use all the memory of your node all by itself.If
+   you have a threaded application or an OpenMP application, you normally
+   use the same specification.
+
+   If you want to run e.g. four copies of the same program in parallel,
+   you specify
+#SBATCH -p node -n 4
+
+   to inform Slurm about this. Slurm then will know that you want to run
+   four tasks on the node. Some tools, like mpirun and srun, ask Slurm for
+   this information and behave differently depending on the specified
+   number of tasks. Most programs and tools do not ask Slurm for this
+   information and thus behave the same, regardless of how many tasks you
+   specify.
+
+   By default, mpirun and srun start as many copies of your specified
+   command or program as the number of specified tasks. If you do not want
+   them to go for the default behaviour, you can give them flags to
+   specify, among other things, how many copies you want them to start.
+
+   To specify more tasks than the number of cores per node is in most
+   cases a bad idea. For the same reason, if you run a threaded
+   application or an OpenMP application, you would normally not want it to
+   start so many parallel threads that you in total run more than the
+   number of cores in parallel threads on the node.
+
+   For example, since a node on tintin has 16 cores, don't start more than
+   16 tasks or run more than 16 threads.
+   This might of course depend on your program.
+
+Specifications for a multi-node job
+
+   If you want to run computations that takes more than one node, but can
+   be run in parts as core jobs and/or single-node jobs, you should
+   probably split them up into several core jobs and/or single-node jobs,
+   and not read any further about multi-node jobs.
+
+   If you want to run e.g. 32 copies of your program on an UPPMAX cluster
+   with 16 cores per node, e.g. for a openmpi program, you normally
+   specify
+#SBATCH -p node -n 32
+
+   You will get assigned two nodes and making your job run with sixteen
+   copies of your program on each of two nodes. openmpi interacts with
+   Slurm to get your program copies distributed over the allocated nodes,
+   when the mpirun tool is called within your jobscript. The script would
+   look something like
+#! /bin/bash -l
+#
+#SBATCH -p node -n 32 -t 7-00:00:00
+#SBATCH -A p2010999 -J elixir_B
+
+module load intel openmpi
+mpirun elixir B_gamma.txt
+
+   if your application is named "elixir" and is compiled with an intel
+   compiler. mpirun will read from the SLURM environment that it must
+   start the "elixir" program 32 times, i.e. sixteen times on each of two
+   nodes.
+
+   It is often advantageous to bind processes to the cores, especially for
+   very wide jobs. You can see more information about process binding by
+   typing "mpirun -help". To bind each process to cores, in system order
+   do:
+mpirun -bind-to-core elixir B_gamma.txt
+
+   If you want to be sure to use only nodes with 64 GB of memory, you
+   specify
+#SBATCH -p node -n 32 -C mem64GB
+
+   The main reason for not wanting to use a fat node within your job, is
+   that it is a shortage of fat nodes and someone might need the fat node
+   for a job that is not able to run on a 64 GB node.
+
+   If your memory requirements are high, you may want to run your 32
+   copies distributed over more nodes like in
+#SBATCH -p node -N 8 -n 32 -C mem64GB
+
+   making your job run with four copies of your program on each of eight
+   nodes. If you use OpenMPI, mpirun will automatically distribute the 32
+   instances of your program over eight nodes.We now show an example,
+   where you want to run a program "smart_aleck", that communicates over
+   OpenMP within a node, but over OpenMPI between nodes. We want to use
+   ten nodes, i.e. 160 cores. Because a single copy of the program knows
+   how to utilize all sixteen cores within a node, we start one copy (one
+   task) of the program on each node, meaning that we will specify the
+   SLURM flags "-N 10 -n 10" to get the wanted distribution of tasks. Our
+   OpenMP implementation can read the number of cores per node from an
+   environment variable called OMP_NUM_THREADS, so we set the variable to
+   sixteen, letting mpirun distribute it to all nodes. The job script
+   might look like this:
+#! /bin/bash -l
+#
+#SBATCH -p node -N 10 -n 10
+#SBATCH -t 7-00:00:00
+#SBATCH -A p2010999 -J another_test
+
+module load intel openmpi
+export OMP_NUM_THREADS=16
+mpirun smart_aleck
+
+
+   We get all 160 cores to work, with one OpenMP thread on each. If we
+   later find that sixteen threads together use more memory than is
+   available on the node, we need to find a fatter node or might try
+   lowering the value of OMP_NUM_THREADS.
+
+Short test runs in the "devel" partition
+
+   "devel" is an abbreviation for "development".
+
+   The "--qos=short" flag allows short jobs, up to 15 minutes in length
+   and up to four nodes in width, to be submitted with a high priority, as
+   described earlier.
+
+   If you need to run a half-long test job, up to one hour in length and
+   up to two nodes in width, you may use the "devel" partition. A small
+   number of 64 GB nodes are removed from the "node" partition and can be
+   used in this way.
+
+   This partition of nodes are meant only for small experiments and test
+   runs, and not for production jobs. Like for "--qos=short", the "devel"
+   partition makes it easier to develop programs and do small tests on a
+   crowded system.
+
+   Here is a compilation of facts about the development partition:
+     * Jobs are submitted like "node" jobs, but with a "-p devel" instead
+       of a "-p node".
+     * No core jobs can be run in this partition.
+     * The maximum timelimit for the job is 60 minutes and the maximum
+       node count is two.
+     * You must not have more than one "devel" job in the batch system
+       simultaneously, regardless if they are running or queued. If you by
+       mistake submit more, they will probably all be automatically
+       cancelled.
+     * To get information about the current status of the "devel"
+       partition, you can use the command
+
+sinfo -p devel
+
+     * The interactive command is allowed to use the "devel" partition to
+       start short jobs. You do normally not need to tell the interactive
+       command what partition to use, as it can make the choice
+       automatically.
+
+Difference between devel partition and devcore partition
+
+   Sometimes it is too expensive to pay for a full node, if you only need
+   one core or a few. So, we have now configured a new partition, named
+   "devcore". It covers the same physical nodes as the "devel" partition,
+   but you can ask for single cores or multiple cores, like in the "core"
+   partition.
+
+   Some exemples:
+- "-p devcore -n 8" asks for eight cores and the proportional amount of RAM
+- "-p devcore -n 1" on Tintin gives you one core and 4 GB of RAM
+- "-p devcore -n 10" on Tintin gives you ten cores and 40 GB of RAM
+- "-p devel -n 16" on Tintin gives you all cores and 64 GB of RAM
+- "-p devcore -n 1" on Milou gives you one core and 8 GB of RAM
+- "-p devcore -n 8" on Milou gives you eight cores and 64 GB of RAM
+- "-p devel -n 16" on Milou gives you all cores and 128 GB of RAM
+
+   So, what is the difference on Milou between
+   -p devcore -n 16
+   and
+   -p devel -n 16
+   ?
+
+   None at all! In both cases, you ask for all cores on the node and all
+   RAM on the node.
+
+Project accounting
+
+   When you specify "-p node", you allocate full nodes, each containing
+   sixteen cores, so your are accounted a number of "core hours"
+   (sometimes named "CPU hours") that are the number of hours your job did
+   run, multiplied with sixteen times the number of nodes that you did
+   allocate. On the other hand, if you do not specify "-p node" and keep
+   withing the limits mentioned above, you will accounted only the number
+   of hours that your job did run.
+
+   To get an overview of how much of your project allocation that has been
+   used, please use the projinfo command. Please use the command
+projinfo -h
+
+   to get details on usage. With no flags given,
+projinfo
+
+   will tell you your usage in all your projects during the last 30 days.
+
+   To get your usage in project p2010999 during the current year, please
+   use one of the commands
+
+projinfo -y p2010999
+   or
+projinfo -s january p2010999
+
+   The projinfo command extracts information from a system log of all
+   finished jobs, and also includes information from the batch system on
+   currently running jobs.
+
+Finished jobs
+
+   In order to see information about finished jobs, use the command
+   finishedjobinfo
+
+   The command gives you, apart for the timings of the job, the amount of
+   memory your job used. If your job was cancelled it might be because
+   your job used more memory than it was allowed to.
+
+Details about memory usage
+
+   Historical information can first of all be found by issuing the command
+   "finishedjobinfo -j [job id]". That will print out the maximum memory
+   used by your job. If you want more details then we also save some
+   memory information each 5 minute interval for the job in the file
+   /sw/share/slurm/[cluster_name]/uppmax_jobstats/[node_name]/[job_id].
+   Notice that this is only stored for 30 days.
+
+   You can also ask for an e-mail containing the log, when you submit your
+   job with sbatch or start an "interactive" session, by adding a "-C
+   usage_mail" flag to your command. Two examples:
+sbatch -A testproj -p core -n 5 -C usage_mail batchscript1
+interactive -A testproj -p node -n 1 -C "fat&usage_mail"
+
+   As you see, you have to be careful with the syntax when asking for two
+   features, like "fat" and "usage_mail", at
+   the same time. If you overdraft the RAM that you asked for, you will
+   probably get an automatic e-mail anyway.
+
+Discovering job resource usage with jobstats
+
+   If you want to be able to see even more details about how your jobs
+   have used the requested resources, then please check out our guide
+   about how to use our [67]jobstats scripts.
+
+
+   ____________________________________________________________
+   ____________________________________________________________
+   ____________________________________________________________
+   ____________________________________________________________
+
+   Last updated: 2015-02-24
+
+Need support?
+
+   Welcome with your questions, to:
+   [68]support@uppmax.uu.se

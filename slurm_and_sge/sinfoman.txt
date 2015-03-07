@@ -1,0 +1,589 @@
+SINFO(1)		       Slurm components			      SINFO(1)
+
+
+
+NAME
+       sinfo - view information about SLURM nodes and partitions.
+
+
+SYNOPSIS
+       sinfo [OPTIONS...]
+
+DESCRIPTION
+       sinfo  is used to view partition and node information for a system run-
+       ning SLURM.
+
+
+OPTIONS
+       -a, --all
+	      Display information about all partitions. This  causes  informa-
+	      tion  to	be  displayed  about partitions that are configured as
+	      hidden and partitions that are unavailable to user’s group.
+
+
+       -b, --bgl
+	      Display information about bglblocks (on Blue Gene systems only).
+
+
+       -d, --dead
+	      If  set  only report state information for non-responding (dead)
+	      nodes.
+
+
+       -e, --exact
+	      If set, do not group node information on multiple	 nodes	unless
+	      their configurations to be reported are identical. Otherwise cpu
+	      count, memory size, and disk space for nodes will be listed with
+	      the minimum value followed by a "+" for nodes with the same par-
+	      tition and state (e.g., "250+").
+
+
+       -h, --noheader
+	      Do not print a header on the output.
+
+
+       --help Print a message describing all sinfo options.
+
+
+       --hide Do not display information about hidden partitions. By  default,
+	      partitions that are configured as hidden or are not available to
+	      the user’s group will not be displayed (i.e. this is the default
+	      behavior).
+
+
+       -i <seconds>, --iterate=<seconds>
+	      Print  the  state	 on a periodic basis.  Sleep for the indicated
+	      number of seconds between reports.  By default,  prints  a  time
+	      stamp with the header.
+
+
+       -l, --long
+	      Print  more detailed information.	 This is ignored if the --for-
+	      mat option is specified.
+
+
+       -M, --clusters=<string>
+	      Clusters to issue commands to.  Multiple cluster	names  may  be
+	      comma  separated.	  A value of of ’all’ will query to run on all
+	      clusters.
+
+
+       -n <nodes>, --nodes=<nodes>
+	      Print information only about the	specified  node(s).   Multiple
+	      nodes  may  be  comma  separated or expressed using a node range
+	      expression. For  example	"linux[00-07]"	would  indicate	 eight
+	      nodes,  "linux00" through "linux07."  Performance of the command
+	      can be measurably improved for systems  with  large  numbers  of
+	      nodes when a single node name is specified.
+
+
+       -N, --Node
+	      Print  information in a node-oriented format.  The default is to
+	      print information	 in  a	partition-oriented  format.   This  is
+	      ignored if the --format option is specified.
+
+
+       -o <output_format>, --format=<output_format>
+	      Specify  the  information	 to be displayed using an sinfo format
+	      string. Format strings transparently used by sinfo when  running
+	      with various options are
+
+	      default	     "%#P %.5a %.10l %.6D %.6t %N"
+
+	      --summarize    "%#P %.5a %.10l %.16F  %N"
+
+	      --long	     "%#P  %.5a %.10l %.10s %.4r %.8h %.10g %.6D %.11T
+			     %N"
+
+	      --Node	     "%#N %.6D %#P %6t"
+
+	      --long --Node  "%#N %.6D %#P %.11T %.4c %.8z %.6m %.8d %.6w %.8f
+			     %20E"
+
+	      --list-reasons "%20E %9u %19H %N"
+
+	      --long --list-reasons
+			     "%20E %12U %19H %6t %N"
+
+
+	      In the above format strings, the use of "#" represents the maxi-
+	      mum length of any partition name or node list to be printed.   A
+	      pass  is	made  over  the records to be printed to establish the
+	      size in order to allign the sinfo output, then a second pass  is
+	      made  over  the  records	to  print them.	 Note that the literal
+	      character "#" itself is not a valid field length	specification,
+	      but is only used to document this behaviour.
+
+	      The field specifications available include:
+
+	      %all  Print  all fields available for this data type with a ver-
+		    tical bar separating each field.
+
+	      %a    State/availability of a partition
+
+	      %A    Number of nodes by state in the  format  "allocated/idle".
+		    Do not use this with a node state option ("%t" or "%T") or
+		    the different node	states	will  be  placed  on  separate
+		    lines.
+
+	      %B    The	 max  number of CPUs per node available to jobs in the
+		    partition.
+
+	      %c    Number of CPUs per node
+
+	      %C    Number  of	CPUs   by   state   in	 the   format	"allo-
+		    cated/idle/other/total". Do not use this with a node state
+		    option ("%t" or "%T") or the different node states will be
+		    placed on separate lines.
+
+	      %d    Size of temporary disk space per node in megabytes
+
+	      %D    Number of nodes
+
+	      %E    The reason a node is unavailable (down, drained, or drain-
+		    ing states).
+
+	      %f    Features associated with the nodes
+
+	      %F    Number  of	nodes  by   state   in	 the   format	"allo-
+		    cated/idle/other/total".   Do  not	use  this  with a node
+		    state option ("%t" or "%T") or the different  node	states
+		    will be placed on separate lines.
+
+	      %g    Groups which may use the nodes
+
+	      %G    Generic resources (gres) associated with the nodes
+
+	      %h    Jobs may share nodes, "yes", "no", or "force"
+
+	      %H    Print the timestamp of the reason a node is unavailable.
+
+	      %l    Maximum  time  for	any job in the format "days-hours:min-
+		    utes:seconds"
+
+	      %L    Default time for any job in	 the  format  "days-hours:min-
+		    utes:seconds"
+
+	      %m    Size of memory per node in megabytes
+
+	      %M    PreemptionMode
+
+	      %n    List of node hostnames
+
+	      %N    List of node names
+
+	      %o    List of node communication addresses
+
+	      %O    CPU load of a node
+
+	      %p    Partition scheduling priority
+
+	      %P    Partition  name followed by "*" for the default partition,
+		    also see %R
+
+	      %r    Only user root may initiate jobs, "yes" or "no"
+
+	      %R    Partition name, also see %P
+
+	      %s    Maximum job size in nodes
+
+	      %S    Allowed allocating nodes
+
+	      %t    State of nodes, compact form
+
+	      %T    State of nodes, extended form
+
+	      %u    Print the user name of  who	 set  the  reason  a  node  is
+		    unavailable.
+
+	      %U    Print  the	user name and uid of who set the reason a node
+		    is unavailable.
+
+	      %v    Print the version of the running slurmd daemon.
+
+	      %w    Scheduling weight of the nodes
+
+	      %X    Number of sockets per node
+
+	      %Y    Number of cores per socket
+
+	      %Z    Number of threads per core
+
+	      %z    Extended processor information: number of sockets,	cores,
+		    threads (S:C:T) per node
+
+	      %.<*> right justification of the field
+
+	      %<Number><*>
+		    size of field
+
+
+       -p <partition>, --partition=<partition>
+	      Print  information only about the specified partition(s). Mutli-
+	      ple partitions are separated by commas.
+
+
+       -r, --responding
+	      If set only report state information for responding nodes.
+
+
+       -R, --list-reasons
+	      List reasons nodes are in the down,  drained,  fail  or  failing
+	      state.   When  nodes are in these states SLURM supports optional
+	      inclusion of a "reason" string by an administrator.  This option
+	      will  display  the  first	 35 characters of the reason field and
+	      list of nodes with that  reason  for  all	 nodes	that  are,  by
+	      default, down, drained, draining or failing.  This option may be
+	      used with other node filtering options (e.g. -r,	-d,  -t,  -n),
+	      however,	combinations of these options that result in a list of
+	      nodes that are not down or drained or failing will  not  produce
+	      any  output.  When used with -l the output additionally includes
+	      the current node state.
+
+
+       -s, --summarize
+	      List only a partition state summary with no node state  details.
+	      This is ignored if the --format option is specified.
+
+
+       -S <sort_list>, --sort=<sort_list>
+	      Specification  of the order in which records should be reported.
+	      This uses the same field specification as	 the  <output_format>.
+	      Multiple	sorts may be performed by listing multiple sort fields
+	      separated by commas.  The field specifications may  be  preceded
+	      by  "+"  or  "-"	for  ascending	(default) and descending order
+	      respectively.  The partition field specification,	 "P",  may  be
+	      preceded	by  a  "#" to report partitions in the same order that
+	      they appear in SLURM’s   configuration  file,  slurm.conf.   For
+	      example,	a  sort	 value	of  "+P,-m"  requests  that records be
+	      printed in order of increasing partition name and within a  par-
+	      tition  by decreasing memory size.  The default value of sort is
+	      "#P,-t" (partitions ordered as configured then  decreasing  node
+	      state).	If  the	 --Node	 option	 is selected, the default sort
+	      value is "N" (increasing node name).
+
+
+       -t <states> , --states=<states>
+	      List nodes only having the given state(s).  Multiple states  may
+	      be comma separated and the comparison is case insensitive.  Pos-
+	      sible values include (case insensitive): ALLOC, ALLOCATED, COMP,
+	      COMPLETING,  DOWN,  DRAIN	 (for  node  in	 DRAINING  or  DRAINED
+	      states), DRAINED, DRAINING, ERR, ERROR, FAIL,  FAILING,  FUTURE,
+	      FUTR,  IDLE,  MAINT,  MIX,  MIXED,  NO_RESPOND,  NPC,  PERFCTRS,
+	      POWER_DOWN, POWER_UP, RESV, RESERVED, UNK, and UNKNOWN.
+
+	      Possible states include: allocated, completing,  down,  drained,
+	      draining,	 fail,	failing, future, idle, maint, mixed, perfctrs,
+	      power_down, power_up, reserved, and unknown plus
+
+	      By default nodes in the specified	 state	are  reported  whether
+	      they are responding or not.  The --dead and --responding options
+	      may be used to filtering nodes by the responding flag.
+
+
+       -T, --reservation
+	      Only display information about SLURM reservations.
+
+
+       --usage
+	      Print a brief message listing the sinfo options.
+
+
+       -v, --verbose
+	      Provide detailed event logging through program execution.
+
+
+       -V, --version
+	      Print version information and exit.
+
+
+OUTPUT FIELD DESCRIPTIONS
+       AVAIL  Partition state: up or down.
+
+       CPUS   Count of CPUs (processors) on each node.
+
+       S:C:T  Count of sockets (S), cores (C), and threads (T) on these nodes.
+
+       SOCKETS
+	      Count of sockets on these nodes.
+
+       CORES  Count of cores on these nodes.
+
+       THREADS
+	      Count of threads on these nodes.
+
+       GROUPS Resource	allocations  in	 this  partition are restricted to the
+	      named groups.  all indicates that all groups may use this parti-
+	      tion.
+
+       JOB_SIZE
+	      Minimum and maximum node count that can be allocated to any user
+	      job.  A single number indicates the  minimum  and	 maximum  node
+	      count  are  the  same.   infinite is used to identify partitions
+	      without a maximum node count.
+
+       TIMELIMIT
+	      Maximum time limit for any user job  in  days-hours:minutes:sec-
+	      onds.   infinite	is  used  to identify partitions without a job
+	      time limit.
+
+       MEMORY Size of real memory in megabytes on these nodes.
+
+       NODELIST or BP_LIST (BlueGene systems only)
+	      Names of nodes associated with this configuration/partition.
+
+       NODES  Count of nodes with this particular configuration.
+
+       NODES(A/I)
+	      Count of nodes with this particular configuration by node	 state
+	      in the form "available/idle".
+
+       NODES(A/I/O/T)
+	      Count  of nodes with this particular configuration by node state
+	      in the form "available/idle/other/total".
+
+       PARTITION
+	      Name of a partition.  Note that the suffix  "*"  identifies  the
+	      default partition.
+
+       ROOT   Is   the	 ability  to  allocate	resources  in  this  partition
+	      restricted to user root, yes or no.
+
+       SHARE  Will jobs allocated resources  in	 this  partition  share	 those
+	      resources.   no indicates resources are never shared.  exclusive
+	      indicates whole nodes are dedicated to jobs (equivalent to  srun
+	      --exclusive option, may be used even with shared/cons_res manag-
+	      ing  individual  processors).   force  indicates	resources  are
+	      always  available	 to  be shared.	 yes indicates resource may be
+	      shared or not per job’s resource allocation.
+
+       STATE  State of the nodes.  Possible states  include:  allocated,  com-
+	      pleting,	down,  drained, draining, fail, failing, future, idle,
+	      maint, mixed,  perfctrs,	power_down,  power_up,	reserved,  and
+	      unknown  plus Their abbreviated forms: alloc, comp, down, drain,
+	      drng, fail, failg, futr, idle, maint, mix, npc, pow_dn,  pow_up,
+	      resv, and unk respectively.  Note that the suffix "*" identifies
+	      nodes that are presently not responding.
+
+       TMP_DISK
+	      Size of temporary disk space in megabytes on these nodes.
+
+
+NODE STATE CODES
+       Node state codes are shortened as required for the field	 size.	 These
+       node  states  may be followed by a special characater to identify state
+       flags associated with the  node.	  The  following  node	sufficies  and
+       states are used:
+
+       *   The	node is presently not responding and will not be allocated any
+	   new work.  If the node remains non-responsive, it will be placed in
+	   the	DOWN  state (except in the case of COMPLETING, DRAINED, DRAIN-
+	   ING, FAIL, FAILING nodes).
+
+       ~   The node is presently in a power saving mode (typically running  at
+	   reduced frequency).
+
+       #   The node is presently being powered up or configured.
+
+       $   The	node is currently in a reservation with a flag value of "main-
+	   tenance" or is scheduled to be rebooted.
+
+       ALLOCATED   The node has been allocated to one or more jobs.
+
+       ALLOCATED+  The node is allocated to one or more active jobs  plus  one
+		   or more jobs are in the process of COMPLETING.
+
+       COMPLETING  All	jobs  associated  with this node are in the process of
+		   COMPLETING.	This node state will be removed	 when  all  of
+		   the	job’s  processes  have terminated and the SLURM epilog
+		   program (if any) has terminated. See the  Epilog  parameter
+		   description	in  the	 slurm.conf man page for more informa-
+		   tion.
+
+       DOWN	   The node is unavailable for use.  SLURM  can	 automatically
+		   place  nodes	 in  this state if some failure occurs. System
+		   administrators may also  explicitly	place  nodes  in  this
+		   state.  If a node resumes normal operation, SLURM can auto-
+		   matically return it to service. See the ReturnToService and
+		   SlurmdTimeout  parameter  descriptions in the slurm.conf(5)
+		   man page for more information.
+
+       DRAINED	   The node is unavailable for use  per	 system	 administrator
+		   request.   See  the	update node command in the scontrol(1)
+		   man page or the slurm.conf(5) man page  for	more  informa-
+		   tion.
+
+       DRAINING	   The	node  is  currently  executing	a job, but will not be
+		   allocated to	 additional  jobs.  The	 node  state  will  be
+		   changed to state DRAINED when the last job on it completes.
+		   Nodes enter this state per  system  administrator  request.
+		   See	the update node command in the scontrol(1) man page or
+		   the slurm.conf(5) man page for more information.
+
+       ERROR	   The node is currently in an error state and not capable  of
+		   running  any	 jobs.	SLURM can automatically place nodes in
+		   this state if some failure occurs.	System	administrators
+		   may	also  explicitly  place nodes in this state. If a node
+		   resumes normal operation, SLURM can automatically return it
+		   to  service.	 See  the  ReturnToService  and	 SlurmdTimeout
+		   parameter descriptions in the slurm.conf(5)	man  page  for
+		   more information.
+
+       FAIL	   The	node  is  expected to fail soon and is unavailable for
+		   use per system administrator request.  See the update  node
+		   command  in	the  scontrol(1) man page or the slurm.conf(5)
+		   man page for more information.
+
+       FAILING	   The node is currently executing a job, but is  expected  to
+		   fail soon and is unavailable for use per system administra-
+		   tor request.	 See the update	 node  command	in  the	 scon-
+		   trol(1)  man	 page  or  the slurm.conf(5) man page for more
+		   information.
+
+       FUTURE	   The node is currently not fully configured, but expected to
+		   be  available  at  some  point in the indefinite future for
+		   use.
+
+       IDLE	   The node is not allocated to any jobs and is available  for
+		   use.
+
+       MAINT	   The node is currently in a reservation with a flag value of
+		   "maintenance" or is scheduled to be rebooted.
+
+       MIXED	   The node has some of its CPUs ALLOCATED  while  others  are
+		   IDLE.
+
+       PERFCTRS (NPC)
+		   Network  Performance Counters associated with this node are
+		   in use, rendering this node as not  usable  for  any	 other
+		   jobs
+
+       POWER_DOWN  The	node is currently powered down and not capable of run-
+		   ning any jobs.
+
+       POWER_UP	   The node is currently in the process of being powered up.
+
+       RESERVED	   The node is in an advanced reservation  and	not  generally
+		   available.
+
+       UNKNOWN	   The	SLURM controller has just started and the node’s state
+		   has not yet been determined.
+
+
+ENVIRONMENT VARIABLES
+       Some sinfo options may be set via environment variables. These environ-
+       ment  variables,	 along	with  their  corresponding options, are listed
+       below. (Note: Commandline options will always override these settings.)
+
+       SINFO_ALL	   -a, --all
+
+       SINFO_FORMAT	   -o <output_format>, --format=<output_format>
+
+       SINFO_PARTITION	   -p <partition>, --partition=<partition>
+
+       SINFO_SORT	   -S <sort>, --sort=<sort>
+
+       SLURM_CLUSTERS	   Same as --clusters
+
+       SLURM_CONF	   The location of the SLURM configuration file.
+
+       SLURM_TIME_FORMAT   Specify  the	 format	 used to report time stamps. A
+			   value of standard,  the  default  value,  generates
+			   output	     in		   the		  form
+			   "year-month-dateThour:minute:second".  A  value  of
+			   relative  returns  only "hour:minute:second" if the
+			   current day.	 For other dates in the	 current  year
+			   it  prints  the  "hour:minute" preceded by "Tomorr"
+			   (tomorrow), "Ystday" (yesterday), the name  of  the
+			   day	for the coming week (e.g. "Mon", "Tue", etc.),
+			   otherwise the date  (e.g.  "25  Apr").   For	 other
+			   years  it  returns  a date month and year without a
+			   time (e.g.  "6 Jun 2012"). All of the  time	stamps
+			   use a 24 hour format.
+
+			   A  valid  strftime()	 format can also be specified.
+			   For example, a value of "%a %T" will report the day
+			   of the week and a time stamp (e.g. "Mon 12:34:56").
+
+
+EXAMPLES
+       Report basic node and partition configurations:
+
+
+       > sinfo
+       PARTITION AVAIL TIMELIMIT NODES STATE  NODELIST
+       batch	 up	infinite     2 alloc  adev[8-9]
+       batch	 up	infinite     6 idle   adev[10-15]
+       debug*	 up	   30:00     8 idle   adev[0-7]
+
+
+       Report partition summary information:
+
+       > sinfo -s
+       PARTITION AVAIL TIMELIMIT NODES(A/I/O/T) NODELIST
+       batch	 up	infinite 2/6/0/8	adev[8-15]
+       debug*	 up	   30:00 0/8/0/8	adev[0-7]
+
+
+       Report more complete information about the partition debug:
+
+       > sinfo --long --partition=debug
+       PARTITION AVAIL TIMELIMIT JOB_SIZE ROOT SHARE GROUPS NODES STATE NODELIST
+       debug*	 up	   30:00	8 no   no    all	8 idle	dev[0-7]
+
+       Report only those nodes that are in state DRAINED:
+
+       > sinfo --states=drained
+       PARTITION AVAIL NODES TIMELIMIT STATE  NODELIST
+       debug*	 up	   2	 30:00 drain  adev[6-7]
+
+
+       Report node-oriented information with details and exact matches:
+
+       > sinfo -Nel
+       NODELIST	   NODES PARTITION STATE  CPUS MEMORY TMP_DISK WEIGHT FEATURES REASON
+       adev[0-1]       2 debug*	   idle	     2	 3448	 38536	   16 (null)   (null)
+       adev[2,4-7]     5 debug*	   idle	     2	 3384	 38536	   16 (null)   (null)
+       adev3	       1 debug*	   idle	     2	 3394	 38536	   16 (null)   (null)
+       adev[8-9]       2 batch	   allocated 2	  246	 82306	   16 (null)   (null)
+       adev[10-15]     6 batch	   idle	     2	  246	 82306	   16 (null)   (null)
+
+
+       Report only down, drained and draining nodes and their reason field:
+
+       > sinfo -R
+       REASON				   NODELIST
+       Memory errors			   dev[0,5]
+       Not Responding			   dev8
+
+
+
+COPYING
+       Copyright (C) 2002-2007 The Regents of the  University  of  California.
+       Produced at Lawrence Livermore National Laboratory (cf, DISCLAIMER).
+       Copyright (C) 2008-2009 Lawrence Livermore National Security.
+       Copyright (C) 2010-2013 SchedMD LLC.
+
+       This  file  is  part  of	 SLURM,	 a  resource  management program.  For
+       details, see <http://slurm.schedmd.com/>.
+
+       SLURM is free software; you can redistribute it and/or modify it	 under
+       the  terms  of  the GNU General Public License as published by the Free
+       Software Foundation; either version 2  of  the  License,	 or  (at  your
+       option) any later version.
+
+       SLURM  is  distributed  in the hope that it will be useful, but WITHOUT
+       ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY  or
+       FITNESS	FOR  A PARTICULAR PURPOSE.  See the GNU General Public License
+       for more details.
+
+
+SEE ALSO
+       scontrol(1),    smap(1),	   squeue(1),	  slurm_load_ctl_conf	  (3),
+       slurm_load_jobs	(3),  slurm_load_node  (3), slurm_load_partitions (3),
+       slurm_reconfigure  (3),	slurm_shutdown	(3),   slurm_update_job	  (3),
+       slurm_update_node (3), slurm_update_partition (3), slurm.conf(5)
+
+
+
+sinfo 14.03			  August 2013			      SINFO(1)

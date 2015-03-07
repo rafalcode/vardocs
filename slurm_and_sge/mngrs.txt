@@ -1,0 +1,148 @@
+SunWikis/GridEngine
+
+Users and User Categories
+
+   There are four categories of users that each have access to their own
+   set of Grid Engine system commands:
+     * Managers – Managers have full capabilities to manipulate the Grid
+       Engine system. By default, the superusers of all administration
+       hosts have manager privileges.
+     * Operators – Operators can perform many of the same commands as
+       managers, with the exception of making configuration changes, for
+       example, adding, deleting, or modifying queues.
+     * Owners – Queue owners can suspend or enable the queues that they
+       own. Queue owners can also suspend or enable the jobs within the
+       queues that they own. Queue owners have no other management
+       permissions.
+     * Users – Users have certain access permissions, as described in
+       [45]User Access Permissions. Users have no cluster management or
+       queue management capabilities.
+
+   The following table shows the command capabilities that are available
+   to the different user categories.
+
+Table – User Categories and Associated Command Capabilities
+
+   Command Manager Operator Owner User
+   qacct Full Full Own jobs only Own jobs only
+   qalter Full Full Own jobs only Own jobs only
+   qconf Full No system setup modifications Show only configurations and
+   access permissions Show only configurations and access permissions
+   qdel Full Full Own jobs only Own jobs only
+   qhold Full Full Own jobs only Own jobs only
+   qhost Full Full Full Full
+   qlogin Full Full Full Full
+   qmod Full Full Own jobs and owned queues only Own jobs only
+   qmon Full No system setup modifications No configuration changes No
+   configuration changes
+   qrexec Full Full Full Full
+   qselect Full Full Full Full
+   qsh Full Full Full Full
+   qstat Full Full Full Full
+   qsub Full Full Full Full
+
+User Access Permissions
+
+   The administrator can restrict access to queues and other facilities,
+   such as parallel environment interfaces. Access can also be restricted
+   to certain users or user groups.
+   Note
+   The Grid Engine software automatically takes into account the access
+   restrictions configured by the cluster administration. The following
+   sections are important only if you want to query your personal access
+   permission.
+
+   For the purpose of restricting access permissions, the administrator
+   creates and maintains access lists (ACLs). The ACLs contain user names
+   and UNIX group names. The ACLs are then added to access-allowed or
+   access-denied lists in the queue or in the parallel environment
+   interface configurations. For more information, see the
+   [46]queue_conf(5)^ or sge_pe(5) man pages.
+
+   Users who belong to ACLs that are listed in access-allowed-lists have
+   permission to access the queue or the parallel environment interface.
+   Users who are members of ACLs in access-denied-lists cannot access the
+   resource in question.
+
+   You can also use ACLs to define projects, to which assigned users can
+   submit their jobs. The administrator can also restrict access to
+   cluster resources on a per project basis.
+
+   The User Configuration dialog box opens when you click the User
+   Configuration button in the QMON Main Control window. This dialog box
+   enables you to query for the ACLs to which you have access. For
+   details, see [47]Managing User Access.
+
+   You can display project access by clicking the Project Configuration
+   icon in the QMON Main Control window. Details are described in
+   [48]Defining Projects.
+
+   From the command line, you can get a list of the currently configured
+   ACLs with the following command:
+% qconf -sul
+
+   You can list the entries in one or more access lists with the following
+   command:
+% qconf -su <acl-name>[,<...>]
+
+   The ACLs consist of user account names and UNIX group names. The UNIX
+   group names are identified by a prefixed @ sign. In this way, you can
+   determine which ACLs your account belongs to.
+   Note
+   If you have permission to switch your primary UNIX group with the
+   newgrp command, your access permissions might change.
+
+   You can check for those queues or parallel environment interfaces to
+   which you have access or to which your access is denied. Query the
+   queue or parallel environment interface configuration, as described in
+   [49]Displaying Queues and Queue Properties and [50]How to Configure
+   Parallel Environments With QMON.
+
+   The access-allowed-lists are named user_lists. The access-denied-lists
+   are named xuser_lists. If your user account or primary UNIX group is
+   associated with an access-allowed-list, you are allowed to access the
+   resource in question. If you are associated with an access-denied-list,
+   you cannot access the queue or parallel environment interface. If both
+   lists are empty, every user with a valid account can access the
+   resource in question.
+
+   You can control project configurations from the command line using the
+   following commands:
+% qconf -sprjl
+% qconf -sprj <project-name>
+
+   These commands display a list of defined projects and a list of
+   particular project configurations, respectively. The projects are
+   defined through ACLs. You must query the ACL configurations, as
+   described in the previous paragraph.
+
+   If you have access to a project, you are allowed to submit jobs that
+   are subordinated to the project. You can submit such jobs from the
+   command line using the following command:
+% qsub -P <project-name> <options>
+
+   The cluster configurations, host configurations, and queue
+   configurations define project access in the same way as for ACLs. These
+   configurations use the project_lists and xproject_lists parameters for
+   this purpose.
+
+Managers, Operators, and Owners
+
+   Note
+   The superuser of an administration host is considered to be a manager
+   by default.
+
+   Use the following command to display a list of Grid Engine system
+   managers:
+% qconf -sm
+
+   Use the following command to display a list of operators:
+% qconf -so
+
+   Users who are owners of a certain queue are contained in the queue
+   configuration, as described in [51]Displaying Queues and Queue
+   Properties. You can display the queue configuration by typing the
+   following command:
+% qconf -sq {<cluster-queue> | <queue-instance> | <queue-domain>}
+
+   The queue configuration entry in question is called owner_list.

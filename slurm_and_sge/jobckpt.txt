@@ -1,0 +1,364 @@
+
+   #[1]SunWikis [2]SunWikis/GridEngine [3]GridEngine Wiki Feed (RSS)
+   [4]GridEngine Wiki Feed (Atom) [5]SunWikis Feed (RSS) [6]SunWikis Feed
+   (Atom) [7]Using Job Checkpointing - Sun Grid Engine 6.2 - comments
+   (Atom)
+
+     * [8]Sun.com
+     * [9]Wikis Home
+
+   [participate]
+
+   Quick Search
+
+   _________________________ Search
+
+     * [10]Browse
+          + [11]Pages
+          + [12]Blog
+          + [13]Labels
+          + [14]Attachments
+          + [15]Bookmarks
+          + [16]Advanced
+          + [17]Confluence Gadgets
+     * [18]Log In
+     * [19]Sign Up
+     * [20]Help
+          + [21]Help Wiki
+          + [22]Contact Wiki Admin
+     * [23]Report an Issue
+          + [24]Report a Wiki Space Issue
+          + [25]Report a Site Wide Issue
+
+    1. [26]Wikis Home
+    2. [27]Sun Grid Engine 6.2
+    3. …
+    4. [28]Home
+    5. [29]Using Sun Grid Engine
+    6. Using Job Checkpointing
+
+     * [30]Tools
+          + [31]Attachments (1)
+          + [32]Page History
+          + [33]Restrictions
+          + [34]Info
+          + [35]Link to this Page…
+          + [36]View Wiki Markup
+
+[37]Using Job Checkpointing
+
+     * [38]Page restrictions apply
+     * [39]Attachments:1
+     * Added by [40]Sandra.Konta, last edited by [41]Sandra.Konta on Jan
+       14, 2009  ([42]view change)
+
+   Comment:
+
+   Searching Sun Grid Engine 6.2
+
+   ____________________
+   Go
+
+   [43]Sun Grid Engine Information Center
+   [44]Using Sun Grid Engine
+   [45]Index
+     __________________________________________________________________
+
+Using Job Checkpointing
+
+     * [46]User-Level Checkpointing
+     * [47]Kernel-Level Checkpointing
+     * [48]Migrating Checkpointing Jobs
+     * [49]Composing a Checkpointing Job Script
+
+     * [50]How to Submit a Checkpointing Job With QMON
+     * [51]How to Submit, Monitor, or Delete a Checkpointing Job From the
+       Command Line
+
+     [52]File System Requirements for Checkpointing
+
+User-Level Checkpointing
+
+   Many application programs, especially programs that consume
+   considerable CPU time, use checkpointing and restart mechanisms to
+   increase fault tolerance. Status information and important parts of the
+   processed data are repeatedly written to one or more files at certain
+   stages of the algorithm. If the application is aborted, these restart
+   files can be processed and restarted at a later time. The files reach a
+   consistent state that is comparable to the situation just before the
+   checkpoint. Because the user mostly has to move the restart files to a
+   proper location, this kind of checkpointing is called user-level
+   checkpointing.
+
+   Application programs that do not have integrated user-level
+   checkpointing can use a checkpointing library. A checkpointing library
+   can be provided by some hardware vendors or by the public domain. The
+   Condor project of the University of Wisconsin is an example. By
+   relinking an application with such a library, a checkpointing mechanism
+   is installed in the application without requiring source code changes.
+
+Kernel-Level Checkpointing
+
+   Some operating systems provide checkpointing support inside the
+   operating system kernel. No preparations in the application programs
+   and no relinking of the application is necessary in this case.
+   Kernel-level checkpointing usually applies to single processes as well
+   as to complete process hierarchies. A hierarchy of interdependent
+   processes can be checkpointed and restarted at any time. Usually both a
+   user command and a C library interface are available to initiate a
+   checkpoint.
+
+   The Grid Engine system supports operating system checkpointing if
+   available. See the release notes for the Sun Grid Engine software for
+   information about the currently supported kernel-level checkpointing
+   facilities.
+
+Migrating Checkpointing Jobs
+
+   Checkpointing jobs are interruptible at any time because their restart
+   capability ensures that very little work that is already done must be
+   repeated. This ability is used to build migration and dynamic load
+   balancing mechanism in the Grid Engine system. If requested,
+   checkpointing jobs are stopped on demand. The jobs are migrated to
+   other machines in the Grid Engine system, thus averaging the load in
+   the cluster dynamically. Checkpointing jobs are stopped and migrated
+   for the following reasons:
+     * The executing queue or the job is suspended explicitly by a qmod or
+       a QMON command.
+     * The job or the queue where the job runs is suspended automatically
+       because a suspend threshold for the queue is exceeded. The
+       checkpoint occasion specification for the job includes the
+       suspension case. For more information, see [53]How to Configure
+       Load and Suspend Thresholds and [54]How to Submit, Monitor, or
+       Delete a Checkpointing Job.
+
+   A migrating job moves back to sge_qmaster. The job is subsequently
+   dispatched to another suitable queue if such a queue is available. In
+   such a case, the qstat output shows R as the status.
+
+Composing a Checkpointing Job Script
+
+   Shell scripts for kernel-level checkpointing are the same as regular
+   shell scripts.
+
+   Shell scripts for user-level checkpointing jobs differ from regular
+   batch scripts only in their ability to properly handle the restart
+   process. The environment variable RESTARTED is set for checkpointing
+   jobs that are restarted. Use this variable to skip sections of the job
+   script that need to be executed only during the initial invocation.
+
+   The following example shows a sample transparently checkpointing job
+   script.
+
+Example – Checkpointing Job Script
+
+#!/bin/sh
+#Force /bin/sh in Grid Engine
+#$ -S /bin/sh
+
+# Test if restarted/migrated
+if [ $RESTARTED = 0 ]; then
+     # 0 = not restarted
+     # Parts to be executed only during the first
+     # start go in here
+     set_up_grid
+fi
+
+# Start the checkpointing executable
+fem
+#End of scriptfile
+
+   The job script restarts from the beginning if a user-level
+   checkpointing job is migrated. The user is responsible for directing
+   the program flow of the shell script to the location where the job was
+   interrupted. Doing so skips those lines in the script that must be
+   executed more than once.
+   Note
+   Kernel-level checkpointing jobs are interruptible at any time. The
+   embracing shell script is restarted exactly from the point where the
+   last checkpoint occurred. Therefore, the RESTARTED environment variable
+   is not relevant for kernel-level checkpointing jobs.
+
+How to Submit a Checkpointing Job With QMON
+
+   The submission of checkpointing jobs With QMON is identical to
+   submitting regular batch jobs, with the addition of specifying an
+   appropriate checkpointing environment. As explained in [55]How to
+   Submit Advanced Jobs With QMON, the Submit Job dialog box provides a
+   field for the checkpointing environment that is associated with a job.
+   Click the button next to that field to open the following Selection
+   dialog box.
+   "Dialog box titled Select an Item. Shows Ok
+
+   You can select a suitable checkpoint environment from the list of
+   available checkpoint objects. Ask your system administrator for
+   information about the properties of the checkpointing environments that
+   are installed at your site. For more information, refer to [56]Managing
+   Checkpointing Environments.
+
+How to Submit, Monitor, or Delete a Checkpointing Job From the Command Line
+
+   Type the following command with the appropriate options:
+# qsub <options> <arguments>
+
+   The submission of a checkpointing job works in the same way as for
+   regular batch scripts, except for the qsub -ckpt and qsub -c commands.
+   These commands request a checkpointing mechanism. The commands also
+   define the occasions at which checkpoints must be generated for the
+   job.
+
+   The -ckpt option takes one argument, which is the name of the
+   checkpointing environment to use. See [57]Managing Checkpointing
+   Environments.
+
+   The -c option is not required. -c also takes one argument. Use the -c
+   option to override the definitions of the when parameter in the
+   checkpointing environment configuration. See the checkpoint(5) man page
+   for details.
+
+   The argument to the -c option can be one of the following one-letter
+   selections, or any combination. The argument can also be a time value.
+     * n – No checkpoint is performed. n has the highest precedence.
+     * s – A checkpoint is generated only if the sge_execd on the jobs
+       host is shut down.
+     * m – Generate the checkpoint at the minimum CPU interval defined in
+       the corresponding queue configuration. See the min_cpu_interval
+       parameter in the queue_conf(5) man page.
+     * x – A checkpoint is generated if the job is suspended.
+     * interval – Generate the checkpoint in the given interval but not
+       more frequently than defined by min_cpu_interval. The time value
+       must be specified as hh:mm:ss. This format specifies two digit
+       hours, minutes, and seconds, separated by colons.
+
+   The monitoring of checkpointing jobs differs from monitoring regular
+   jobs. Checkpointing jobs can migrate from time to time. Checkpointing
+   jobs are therefore not bound to a single queue. However, the unique job
+   identification number and the job name stay the same.
+
+   The deletion of checkpointing jobs works in the same way as described
+   in [58]Monitoring and Controlling Jobs From the Command Line.
+
+File System Requirements for Checkpointing
+
+   When a user-level checkpoint or a kernel-level checkpoint that is based
+   on a checkpointing library is written, a complete image of the virtual
+   memory covered by the process or job to be checkpointed must be saved.
+   Sufficient disk space must be available for this purpose. If the
+   checkpointing environment configuration parameter ckpt_dir is set, the
+   checkpoint information is saved to a job private location under
+   ckpt_dir. If ckpt_dir is set to NONE, the directory where the
+   checkpointing job started is used. See the checkpoint(5) man page for
+   detailed information about the checkpointing environment configuration.
+   Note
+   You should start a checkpointing job with the qsub -cwd script if
+   ckpt_dir is set to NONE.
+
+   Checkpointing files and restart files must be visible on all machines
+   in order to successfully migrate and restart jobs. Because file
+   visibility is necessary for the way file systems must be organized, NFS
+   or a similar file system is required. Ask your cluster administration
+   if your site meets this requirement.
+
+   If your site does not run NFS, you can transfer the restart files
+   explicitly at the beginning of your shell script. For example, you can
+   use rcp or ftp in the case of user-level checkpointing jobs.
+     __________________________________________________________________
+
+   Labels parameters
+
+Labels
+
+   Enter labels to add to this page:
+   ________________________________________ Add Done
+   Please wait
+   Looking for a label? Just start typing.
+
+   [warning.gif] [59]Sign up or [60]Log in to add a comment or watch this
+   page.
+
+   The individuals who post here are part of the extended Sun Microsystems
+   community and they might not be employed or in any way formally
+   affiliated with Sun Microsystems. The opinions expressed here are their
+   own, are not necessarily reviewed in advance by anyone but the
+   individual authors, and neither Sun nor any other party necessarily
+   agrees with them.
+   © 2010, Oracle Corporation and/or its affiliates
+   Powered by [61]Atlassian Confluence [62]Oracle Social Media
+   Participation Policy [63]Privacy Policy [64]Terms of Use [65]Trademarks
+   [66]Site Map [67]Employment [68]Investor Relations [69]Contact
+
+References
+
+   Visible links
+   1. http://wikis.sun.com/search/osd.jsp
+   2. http://wikis.sun.com/search/osd.jsp?spaceKey=GridEngine
+   3. http://wikis.sun.com/createrssfeed.action?types=page&types=blogpost&types=comment&types=attachment&sort=modified&showDiff=true&spaces=GridEngine&labelString=&rssType=rss2&maxResults=30&timeSpan=30&publicFeed=true&title=GridEngine+Wiki+Feed&showContent=false
+   4. http://wikis.sun.com/createrssfeed.action?types=page&types=blogpost&types=comment&types=attachment&sort=modified&showDiff=true&spaces=GridEngine&labelString=&rssType=atom&maxResults=30&timeSpan=30&publicFeed=true&title=GridEngine+Wiki+Feed&showContent=false
+   5. http://wikis.sun.com/createrssfeed.action?types=page&types=blogpost&types=comment&types=attachment&spaces=&sort=modified&title=SunWikis+Feed&maxResults=30&publicFeed=true&rssType=rss2
+   6. http://wikis.sun.com/createrssfeed.action?types=page&types=blogpost&types=comment&types=attachment&spaces=&sort=modified&title=SunWikis+Feed&maxResults=30&publicFeed=true&rssType=atom
+   7. http://wikis.sun.com/plugins/pagefeeds/comments-feed.action?pageId=31405552
+   8. http://www.sun.com/
+   9. http://wikis.sun.com/
+  10. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing
+  11. http://wikis.sun.com/pages/listpages.action?key=GridEngine
+  12. http://wikis.sun.com/pages/viewrecentblogposts.action?key=GridEngine
+  13. http://wikis.sun.com/labels/listlabels-heatmap.action?key=GridEngine
+  14. http://wikis.sun.com/spaces/listattachmentsforspace.action?key=GridEngine
+  15. http://wikis.sun.com/spaces/space-bookmarks.action?spaceKey=GridEngine
+  16. http://wikis.sun.com/spaces/viewspacesummary.action?key=GridEngine
+  17. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing
+  18. https://identity.sun.com/amserver/UI/Login?org=self_registered_users&goto=http%3A%2F%2Fwikis.sun.com%2Fdisplay%2FGridEngine%2FUsing%2BJob%2BCheckpointing&os_destination=%2Fdisplay%2FGridEngine%2FUsing%2BJob%2BCheckpointing
+  19. http://wikis.sun.com/display/Help/Registering
+  20. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing
+  21. http://wikis.sun.com/display/Help
+  22. http://wikis.sun.com/spaces/contact/contact.action?key=GridEngine
+  23. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing
+  24. http://wikis.sun.com/spaces/contact/contact.action?key=GridEngine
+  25. https://www.sun.com/secure/contact/feedback/index.jsp?refurl=http%3A%2F%2Fwikis.sun.com%2Fdisplay%2FGridEngine%2FUsing%2BJob%2BCheckpointing%23User%3A
+  26. http://wikis.sun.com/dashboard.action
+  27. http://wikis.sun.com/display/GridEngine
+  28. http://wikis.sun.com/display/GridEngine/Home
+  29. http://wikis.sun.com/display/GridEngine/Using+Sun+Grid+Engine
+  30. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing
+  31. http://wikis.sun.com/pages/viewpageattachments.action?pageId=31405552
+  32. http://wikis.sun.com/pages/viewpreviousversions.action?pageId=31405552
+  33. http://wikis.sun.com/pages/viewinfo.action?pageId=31405552
+  34. http://wikis.sun.com/pages/viewinfo.action?pageId=31405552
+  35. http://wikis.sun.com/pages/viewinfo.action?pageId=31405552
+  36. http://wikis.sun.com/pages/viewpagesrc.action?pageId=31405552
+  37. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing
+  38. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing
+  39. http://wikis.sun.com/pages/viewpageattachments.action?pageId=31405552&metadataLink=true
+  40. http://wikis.sun.com/display/~sandra.konta
+  41. http://wikis.sun.com/display/~sandra.konta
+  42. http://wikis.sun.com/pages/diffpages.action?pageId=31405552&originalId=64208677
+  43. http://wikis.sun.com/display/GridEngine/Home
+  44. http://wikis.sun.com/display/GridEngine/Using+Sun+Grid+Engine
+  45. http://wikis.sun.com/display/GridEngine/Index
+  46. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing#UsingJobCheckpointing-UserLevelCheckpointing
+  47. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing#UsingJobCheckpointing-KernelLevelCheckpointing
+  48. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing#UsingJobCheckpointing-MigratingCheckpointingJobs
+  49. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing#UsingJobCheckpointing-ComposingaCheckpointingJobScript
+  50. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing#UsingJobCheckpointing-HowtoSubmitaCheckpointingJobWithQMON
+  51. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing#UsingJobCheckpointing-HowtoSubmit%2CMonitor%2CorDeleteaCheckpointingJobFromtheCommandLine
+  52. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing#UsingJobCheckpointing-FileSystemRequirementsforCheckpointing
+  53. http://wikis.sun.com/display/GridEngine/Configuring+Queues#ConfiguringQueues-HowtoConfigureLoadandSuspendThresholds
+  54. http://wikis.sun.com/display/GridEngine/Using+Job+Checkpointing#UsingJobCheckpointing-chp526
+  55. http://wikis.sun.com/display/GridEngine/Submitting+Extended+Jobs+and+Advanced+Jobs#SubmittingExtendedJobsandAdvancedJobs-i1001426
+  56. http://wikis.sun.com/display/GridEngine/Managing+Checkpointing+Environments
+  57. http://wikis.sun.com/display/GridEngine/Managing+Checkpointing+Environments
+  58. http://wikis.sun.com/display/GridEngine/Monitoring+and+Controlling+Jobs#MonitoringandControllingJobs-MonitoringandControllingJobsFromtheCommandLine
+  59. http://wikis.sun.com/display/Help/Registering
+  60. https://identity.sun.com/amserver/UI/Login?org=self_registered_users&goto=http%3A%2F%2Fwikis.sun.com%2Fdisplay%2FGridEngine%2FUsing%2BJob%2BCheckpointing&os_destination=%2Fpages%2Fviewpage.action%3FspaceKey%3DGridEngine%26title%3DUsing%2BJob%2BCheckpointing
+  61. http://www.atlassian.com/software/confluence/
+  62. http://www.sun.com/communities/guidelines.jsp
+  63. http://www.sun.com/privacy/
+  64. http://www.sun.com/share/text/termsofuse.html
+  65. http://www.sun.com/suntrademarks/
+  66. http://www.sun.com/sitemap/
+  67. http://www.sun.com/corp_emp/
+  68. http://www.sun.com/aboutsun/investor/index.jsp
+  69. http://www.sun.com/contact/
+
+   Hidden links:
+  70. http://wikis.sun.com/display/GridEngine
